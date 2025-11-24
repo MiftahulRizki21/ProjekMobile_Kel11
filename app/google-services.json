@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93145072356",
+    "project_id": "oracareandroid",
+    "storage_bucket": "oracareandroid.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93145072356:android:8c22ef20291ef2d7b162f1",
+        "android_client_info": {
+          "package_name": "com.example.projekmobile_kel11"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4I5zR5p4sg_v2RtkrpOw4ws-HJ8skhKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
