@@ -12,22 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjekMobile_Kel11">
         <activity
+            android:name=".ProfilFragment"
+            android:exported="false" />
+        <activity
+            android:name=".PrediksiFragment"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
