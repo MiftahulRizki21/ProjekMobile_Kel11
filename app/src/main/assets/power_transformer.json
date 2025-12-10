@@ -1,0 +1,10 @@
+{
+    "continuous_cols": [
+        "Age",
+        "Tumor Size (cm)"
+    ],
+    "lambdas": [
+        1.02762002606912,
+        -0.3836688892412344
+    ]
+}

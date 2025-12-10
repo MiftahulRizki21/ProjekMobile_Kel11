@@ -1,0 +1,21 @@
+[
+    "Age",
+    "Gender",
+    "Tobacco Use",
+    "Alcohol Consumption",
+    "HPV Infection",
+    "Betel Quid Use",
+    "Chronic Sun Exposure",
+    "Poor Oral Hygiene",
+    "Diet (Fruits & Vegetables Intake)",
+    "Family History of Cancer",
+    "Compromised Immune System",
+    "Oral Lesions",
+    "Unexplained Bleeding",
+    "Difficulty Swallowing",
+    "White or Red Patches in Mouth",
+    "Tumor Size (cm)",
+    "Cancer Stage",
+    "Treatment Type",
+    "Early Diagnosis"
+]
