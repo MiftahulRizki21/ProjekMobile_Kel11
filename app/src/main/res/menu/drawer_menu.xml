@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Beranda" />
+    <item
+        android:id="@+id/nav_prediction"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Prediksi Kanker Mulut" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Profil" />
+    <item
+        android:id="@+id/nav_education"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Edukasi" />
+    <item
+        android:id="@+id/nav_consultation"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Konsultasi" />
+    <item
+        android:id="@+id/nav_clinic"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Lokasi Klinik" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Logout" />
+</menu>

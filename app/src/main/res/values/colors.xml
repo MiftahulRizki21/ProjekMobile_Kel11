@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Dasar -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary Blue (utama: appbar, button utama, navbar) -->
+    <color name="blue_primary">#1E88E5</color>         <!-- Biru sedang, enak di mata -->
+    <color name="blue_primary_dark">#1565C0</color>    <!-- Untuk status bar / pressed -->
+    <color name="blue_primary_light">#BBDEFB</color>   <!-- Background kartu / accent lembut -->
+
+    <!-- Secondary / Accent -->
+    <color name="teal_accent">#26A69A</color>          <!-- Hijau kebiruan untuk tombol sekunder / chip -->
+    <color name="purple_700">#6A32D5</color>           <!-- Tetap pakai buat highlight tertentu / logo -->
+
+    <!-- Background & Surface -->
+    <color name="bg_light">#F5F7FB</color>             <!-- Background utama layar -->
+    <color name="surface">#FFFFFFFF</color>            <!-- Card / container putih -->
+
+    <!-- Text -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Status / Risiko Prediksi -->
+    <color name="risk_low">#4CAF50</color>             <!-- Hijau: Risiko Rendah -->
+    <color name="risk_medium">#FFC107</color>          <!-- Kuning: Risiko Sedang -->
+    <color name="risk_high">#F44336</color>            <!-- Merah: Risiko Tinggi -->
 </resources>
