@@ -29,6 +29,8 @@
     },
     "treatment_map": {
         "No Treatment": 0,
-        "Surgery": 1
+        "Surgery": 1,
+        "none": 0
+
     }
 }

@@ -59,8 +59,16 @@ class PredictionFormActivity : AppCompatActivity() {
             return
         }
 
-        val cancerStage = findRadioText(R.id.rgCancerStage)
-        val treatment = findRadioText(R.id.rgTreatment)
+        val cancerStage = findRadioTextOptional(
+            R.id.rgCancerStage,
+            "Unknown"
+        )
+
+        val treatment = findRadioTextOptional(
+            R.id.rgTreatment,
+            "None"
+        )
+
         val earlyDiagnosis = findRadioText(R.id.rgEarlyDiagnosis)
 
         val input = PredictionInput(
@@ -145,4 +153,14 @@ class PredictionFormActivity : AppCompatActivity() {
         }
         return findViewById<RadioButton>(checkedId).text.toString()
     }
+    private fun findRadioTextOptional(rgId: Int, default: String): String {
+        val rg = findViewById<RadioGroup>(rgId)
+        val checkedId = rg.checkedRadioButtonId
+        return if (checkedId == -1) {
+            default
+        } else {
+            findViewById<RadioButton>(checkedId).text.toString()
+        }
+    }
+
 }
