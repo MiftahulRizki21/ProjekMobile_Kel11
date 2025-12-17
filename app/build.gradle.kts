@@ -17,6 +17,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+    sourceSets {
+        getByName("main") {
+            res.srcDirs(
+                "src/main/res", // <-- Folder res utama (tanpa layout di dalamnya)
+                // Arahkan ke folder-folder di dalam 'res-layouts'
+                "src/main/res-layouts/layout_common",
+                "src/main/res-layouts/layout_admin",
+                "src/main/res-layouts/layout_user",
+                "src/main/res-layouts/layout_doctor"
+            )
+        }
+    }
 
     buildTypes {
         release {

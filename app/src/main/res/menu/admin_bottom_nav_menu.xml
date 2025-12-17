@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- PASTIKAN ITEM INI ADA -->
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Dashboard" />
+
+    <item
+        android:id="@+id/nav_kelola_user"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="User" />
+
+    <item
+        android:id="@+id/nav_kelola_dokter"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Dokter" />
+
+    <item
+        android:id="@+id/nav_kelola_reminder"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Reminder" />
+
+</menu>
