@@ -7,7 +7,7 @@ import com.example.projekmobile_kel11.databinding.ActivityDashboardAdminBinding
 import com.example.projekmobile_kel11.fragments.DashboardFragment
 import com.example.projekmobile_kel11.fragments.FragmentKelolaDokter
 import com.example.projekmobile_kel11.fragments.KelolaReminderFragment
-import com.example.projekmobile_kel11.fragments.KelolaUserFragment
+import com.example.projekmobile_kel11.KelolaUserFragment
 
 class DashboardAdmin : AppCompatActivity() {
 

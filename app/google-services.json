@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "93145072356",
+    "firebase_url": "https://oracareandroid-default-rtdb.firebaseio.com",
     "project_id": "oracareandroid",
     "storage_bucket": "oracareandroid.firebasestorage.app"
   },

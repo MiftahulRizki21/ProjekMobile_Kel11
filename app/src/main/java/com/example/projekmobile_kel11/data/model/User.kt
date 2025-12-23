@@ -2,9 +2,10 @@ package com.example.projekmobile_kel11.data.model
 
 
 data class User(
-    val userId: String = "",
-    val nama: String = "",
-    val email: String = "",
-    val usia: Int = 0,
-    val gender: String = "" // "Laki-laki" atau "Perempuan"
+    var userId: String = "",
+    var nama: String = "",
+    var email: String = "",
+    var usia: Int = 0,
+    var gender: String = ""
 )
+
