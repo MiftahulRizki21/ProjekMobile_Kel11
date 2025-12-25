@@ -178,10 +178,11 @@
                 android:text="Daftar"
                 android:textSize="14sp"
                 android:textColor="#1A237E"
-                android:backgroundTint="@android:color/transparent"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                app:cornerRadius="20dp" />
+                app:backgroundTint="@android:color/transparent"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:padding="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
