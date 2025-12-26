@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.databinding.ActivityDashboardAdminBinding
-import com.example.projekmobile_kel11.fragments.DashboardFragment
+import com.example.projekmobile_kel11.FragmentDashboard
 import com.example.projekmobile_kel11.fragments.KelolaDokterFragment
 import com.example.projekmobile_kel11.fragments.KelolaReminderFragment
 
@@ -20,11 +20,11 @@ class DashboardAdmin : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             val selectedFragment: Fragment = when (item.itemId) {
-                R.id.nav_dashboard -> DashboardFragment()
+                R.id.nav_dashboard -> FragmentDashboard()
                 R.id.nav_kelola_user -> KelolaUserFragment()
                 R.id.nav_kelola_dokter -> KelolaDokterFragment()
                 R.id.nav_kelola_reminder -> KelolaReminderFragment()
-                else -> DashboardFragment()
+                else -> FragmentDashboard()
             }
 
             supportFragmentManager.beginTransaction()

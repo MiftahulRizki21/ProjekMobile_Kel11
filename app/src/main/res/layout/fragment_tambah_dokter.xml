@@ -23,6 +23,14 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/edtPassword"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
             android:id="@+id/edtSpesialisasi"
             android:hint="Spesialisasi"
             android:layout_marginTop="12dp"

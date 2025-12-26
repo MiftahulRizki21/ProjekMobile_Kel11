@@ -2,50 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA"
-    tools:context=".DashboardAdmin">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <TextView
-                android:id="@+id/tv_welcome_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Selamat Datang, Admin!"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary" />
-
-            <TextView
-                android:id="@+id/tv_current_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="16sp"
-                android:textColor="?android:attr/textColorSecondary"
-                tools:text="Rabu, 17 Desember 2025"/>
-        </LinearLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:background="#F8F9FA">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,183 +16,160 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Bagian Statistik Utama -->
+            <!-- HEADER -->
             <TextView
+                android:id="@+id/tvWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Statistik Utama"
-                android:textSize="18sp"
+                android:text="Dashboard Admin"
+                android:textSize="26sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="4dp"/>
 
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- STATISTIK -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- Card Jumlah Pengguna -->
+                <!-- USERS -->
                 <com.google.android.material.card.MaterialCardView
+                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="#E3F2FD">
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:padding="16dp"
                         android:orientation="vertical"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_launcher_background"
-                            app:tint="#1E88E5"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/tv_user_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            tools:text="150"
-                            android:textColor="#0D47A1"
-                            android:textSize="24sp"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Pengguna"
-                            android:textColor="#1565C0"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
                             android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/tvUserCount"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:text="0"
+                            android:textSize="28sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Card Jumlah Dokter -->
+                <!-- DOKTER -->
                 <com.google.android.material.card.MaterialCardView
+                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="#E8F5E9">
+                    app:cardCornerRadius="16dp">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:padding="16dp"
                         android:orientation="vertical"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_launcher_background"
-                            app:tint="#43A047"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/tv_doctor_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            tools:text="25"
-                            android:textColor="#1B5E20"
-                            android:textSize="24sp"
-                            android:textStyle="bold"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="Dokter"
-                            android:textColor="#2E7D32"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
                             android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/tvDoctorCount"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:text="0"
+                            android:textSize="28sp"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
 
-            <!-- Bagian Akses Cepat -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Akses Cepat"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="12dp"/>
-
-            <!-- Tombol Tambah Dokter -->
+            <!-- KONSULTASI -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_add_doctor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                android:layout_marginBottom="12dp"
-                app:strokeColor="#E0E0E0"
-                app:strokeWidth="1dp"
-                android:clickable="true"
-                android:focusable="true">
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_launcher_background"
-                        app:tint="?attr/colorPrimary"/>
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Tambah Data Dokter Baru"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="?android:attr/textColorPrimary"/>
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_launcher_background"/>
+                        android:text="Total Konsultasi"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvConsultationCount"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:text="0"
+                        android:textSize="28sp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Tombol Kirim Notifikasi -->
+            <!-- AKSI -->
+            <TextView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:text="Aksi Cepat"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"/>
+
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_send_notification"
+                android:id="@+id/cardKelolaDokter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
-                app:strokeColor="#E0E0E0"
-                app:strokeWidth="1dp"
-                android:clickable="true"
-                android:focusable="true">
-                <LinearLayout
+                android:clickable="true">
+
+                <TextView
+                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:padding="16dp"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_launcher_background"
-                        app:tint="?attr/colorPrimary"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Kirim Notifikasi ke Pengguna"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="?android:attr/textColorPrimary"/>
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_launcher_background"/>
-                </LinearLayout>
+                    android:text="Kelola Data Dokter"
+                    android:textStyle="bold"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="16dp"
+                android:clickable="true">
+
+                <TextView
+                    android:padding="16dp"
+                    android:text="Logout"
+                    android:textColor="#D32F2F"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"/>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>

@@ -1,17 +1,15 @@
 package com.example.projekmobile_kel11.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
+import com.example.projekmobile_kel11.TambahDokterFragment
 import com.example.projekmobile_kel11.adapters.DokterAdapter
 import com.example.projekmobile_kel11.databinding.FragmentKelolaDokterBinding
 import com.example.projekmobile_kel11.models.Dokter
-import com.example.projekmobile_kel11.TambahDokterFragment
 import com.google.firebase.database.*
 
 class KelolaDokterFragment : Fragment() {
@@ -20,12 +18,11 @@ class KelolaDokterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: DatabaseReference
-    private val dokterList = mutableListOf<Dokter>()
     private lateinit var adapter: DokterAdapter
+    private val dokterList = mutableListOf<Dokter>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentKelolaDokterBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,41 +30,27 @@ class KelolaDokterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         database = FirebaseDatabase.getInstance().getReference("users")
 
         setupRecyclerView()
-        loadDoctors()
+        loadDokters()
 
-        // FAB untuk tambah dokter baru
         binding.fabAddDoctor.setOnClickListener {
+            val fragment = TambahDokterFragment()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, TambahDokterFragment())
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }
-
-        // SearchView
-        binding.searchViewDoctor.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                filterDoctors(query)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                filterDoctors(newText)
-                return true
-            }
-        })
     }
 
     private fun setupRecyclerView() {
-        adapter = DokterAdapter(dokterList,
-            onEditClick = { dokterId ->
-                // Kirim ID dokter ke TambahDokterFragment untuk edit
+        adapter = DokterAdapter(
+            mutableListOf(),
+            onEditClick = { dokter ->
                 val fragment = TambahDokterFragment()
                 val bundle = Bundle()
-                bundle.putString("doctorId", dokterId)
+                bundle.putString("doctorId", dokter.userId)
                 fragment.arguments = bundle
 
                 parentFragmentManager.beginTransaction()
@@ -75,11 +58,12 @@ class KelolaDokterFragment : Fragment() {
                     .addToBackStack(null)
                     .commit()
             },
-            onDeleteClick = { dokterId ->
-                // Hapus data dari Firebase
-                database.child(dokterId).removeValue()
+            onDeleteClick = { dokter ->
+                database.child(dokter.userId).removeValue()
                     .addOnSuccessListener {
-                        Toast.makeText(context, "Dokter berhasil dihapus", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Dokter dihapus", Toast.LENGTH_SHORT).show()
+                        dokterList.remove(dokter)
+                        adapter.updateData(dokterList)
                     }
                     .addOnFailureListener {
                         Toast.makeText(context, "Gagal menghapus dokter", Toast.LENGTH_SHORT).show()
@@ -87,50 +71,24 @@ class KelolaDokterFragment : Fragment() {
             }
         )
 
-        binding.rvDoctors.layoutManager = LinearLayoutManager(context)
+        binding.rvDoctors.layoutManager = LinearLayoutManager(requireContext())
         binding.rvDoctors.adapter = adapter
     }
 
-    private fun loadDoctors() {
+    private fun loadDokters() {
         database.orderByChild("role").equalTo("doctor")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     dokterList.clear()
                     for (data in snapshot.children) {
-                        val dokter = data.getValue(Dokter::class.java)
-                        if (dokter != null) dokterList.add(dokter)
+                        val dokter = data.getValue(Dokter::class.java) ?: continue
+                        dokterList.add(dokter)
                     }
-                    adapter.notifyDataSetChanged()
+                    adapter.updateData(dokterList)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(context, "Gagal memuat data dokter", Toast.LENGTH_SHORT).show()
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
-    }
-
-    private fun filterDoctors(query: String?) {
-        val filtered = if (!query.isNullOrEmpty()) {
-            dokterList.filter { it.nama.contains(query, true) }
-        } else {
-            dokterList
-        }
-
-        adapter = DokterAdapter(filtered,
-            onEditClick = { dokterId ->
-                val fragment = TambahDokterFragment()
-                val bundle = Bundle()
-                bundle.putString("doctorId", dokterId)
-                fragment.arguments = bundle
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-            },
-            onDeleteClick = { dokterId ->
-                database.child(dokterId).removeValue()
-            })
-        binding.rvDoctors.adapter = adapter
     }
 
     override fun onDestroyView() {

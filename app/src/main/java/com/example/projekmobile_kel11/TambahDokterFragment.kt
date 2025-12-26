@@ -15,6 +15,7 @@ class TambahDokterFragment : Fragment() {
 
     private lateinit var database: DatabaseReference
     private var dokterId: String? = null
+    private var existingPassword: String? = null // ✅ simpan password lama saat edit
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,6 +39,7 @@ class TambahDokterFragment : Fragment() {
                     binding.edtEmail.setText(it.email)
                     binding.edtSpesialisasi.setText(it.spesialisasi)
                     binding.edtFotoUrl.setText(it.fotoUrl)
+                    existingPassword = it.password // simpan password lama
                 }
             }
         }
@@ -52,8 +54,10 @@ class TambahDokterFragment : Fragment() {
         val email = binding.edtEmail.text.toString()
         val spesialisasi = binding.edtSpesialisasi.text.toString()
         val fotoUrl = binding.edtFotoUrl.text.toString()
+        val password = binding.edtPassword.text.toString()
 
-        if (nama.isEmpty() || email.isEmpty() || spesialisasi.isEmpty()) {
+        // Validasi wajib diisi
+        if (nama.isEmpty() || email.isEmpty() || spesialisasi.isEmpty() || (dokterId == null && password.isEmpty())) {
             Toast.makeText(context, "Data wajib diisi", Toast.LENGTH_SHORT).show()
             return
         }
@@ -66,14 +70,15 @@ class TambahDokterFragment : Fragment() {
             email = email,
             spesialisasi = spesialisasi,
             fotoUrl = fotoUrl,
-            role = "doctor"
+            role = "doctor",
+            password = if (password.isNotEmpty()) password else existingPassword ?: ""
         )
 
         database.child(id).setValue(dokter)
             .addOnSuccessListener {
                 val message = if (dokterId == null) "Dokter berhasil ditambahkan" else "Dokter berhasil diupdate"
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+                parentFragmentManager.popBackStack() // kembali ke KelolaDokterFragment
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Gagal menyimpan dokter", Toast.LENGTH_SHORT).show()
