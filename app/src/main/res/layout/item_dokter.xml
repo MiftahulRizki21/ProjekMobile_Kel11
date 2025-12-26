@@ -15,14 +15,16 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <!-- Foto dokter -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_doctor_photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_doctor_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Nama dokter -->
         <TextView
             android:id="@+id/tv_doctor_name"
             android:layout_width="0dp"
@@ -33,9 +35,10 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_doctor_photo"
             app:layout_constraintTop_toTopOf="@id/iv_doctor_photo"
-            app:layout_constraintEnd_toStartOf="@+id/btn_delete_doctor"
+            app:layout_constraintEnd_toStartOf="@+id/btnEdit"
             tools:text="Dr. Amelia Wijaya" />
 
+        <!-- Spesialisasi dokter -->
         <TextView
             android:id="@+id/tv_doctor_specialization"
             android:layout_width="0dp"
@@ -47,17 +50,31 @@
             app:layout_constraintEnd_toEndOf="@id/tv_doctor_name"
             tools:text="Spesialis Jantung" />
 
+        <!-- Tombol delete -->
         <ImageButton
-            android:id="@+id/btn_delete_doctor"
+            android:id="@+id/btnDelete"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:tint="@android:color/holo_red_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:contentDescription="Hapus dokter" />
+
+        <!-- Tombol edit -->
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@android:color/holo_blue_dark"
+            app:layout_constraintEnd_toStartOf="@id/btnDelete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="Edit dokter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

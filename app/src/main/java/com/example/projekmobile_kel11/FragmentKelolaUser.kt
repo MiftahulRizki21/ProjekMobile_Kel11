@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,12 +41,6 @@ class KelolaUserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         database = FirebaseDatabase.getInstance().getReference("users")
-        binding.fabAddUser.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, TambahUserFragment())
-                .addToBackStack(null)
-                .commit()
-        }
 
         setupRecyclerView()
         loadUsers()
@@ -59,7 +52,7 @@ class KelolaUserFragment : Fragment() {
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(
             mutableListOf(),
-            onDeleteClick = { confirmDelete(it) }
+            onDeleteClick = { /* kosongkan karena tidak ada delete */ }
         )
 
         binding.rvUsers.apply {
@@ -67,6 +60,7 @@ class KelolaUserFragment : Fragment() {
             adapter = userAdapter
         }
     }
+
 
     // ---------------- Load Users (Pagination) ----------------
     private fun loadUsers() {
@@ -90,10 +84,13 @@ class KelolaUserFragment : Fragment() {
                 for (data in snapshot.children) {
                     val user = data.getValue(User::class.java) ?: continue
 
-                    // ❗ Hindari duplikasi
+                    // ✅ HANYA USER (PASlEN)
+                    if (user.role != "user") continue
+
                     if (userList.none { it.userId == user.userId }) {
                         userList.add(user)
                     }
+
                     lastKey = data.key
                 }
 
@@ -155,19 +152,6 @@ class KelolaUserFragment : Fragment() {
             }
         })
     }
-
-    // ---------------- Delete ----------------
-    private fun confirmDelete(user: User) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Hapus User")
-            .setMessage("Yakin ingin menghapus ${user.nama}?")
-            .setPositiveButton("Hapus") { _, _ ->
-                database.child(user.userId).removeValue()
-            }
-            .setNegativeButton("Batal", null)
-            .show()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

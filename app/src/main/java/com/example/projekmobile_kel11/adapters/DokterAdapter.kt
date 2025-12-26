@@ -1,4 +1,3 @@
-// di dalam file adapters/DokterAdapter.kt
 package com.example.projekmobile_kel11.adapters
 
 import android.view.LayoutInflater
@@ -8,10 +7,16 @@ import com.bumptech.glide.Glide
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.ItemDokterBinding
 import com.example.projekmobile_kel11.models.Dokter
+import com.google.firebase.database.FirebaseDatabase
 
-class DokterAdapter(private val dokterList: List<Dokter>) : RecyclerView.Adapter<DokterAdapter.DokterViewHolder>() {
+class DokterAdapter(
+    private val dokterList: List<Dokter>,
+    private val onEditClick: (dokterId: String) -> Unit,
+    private val onDeleteClick: (dokterId: String) -> Unit
+) : RecyclerView.Adapter<DokterAdapter.DokterViewHolder>() {
 
-    inner class DokterViewHolder(val binding: ItemDokterBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class DokterViewHolder(val binding: ItemDokterBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DokterViewHolder {
         val binding = ItemDokterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,8 +31,15 @@ class DokterAdapter(private val dokterList: List<Dokter>) : RecyclerView.Adapter
 
             Glide.with(holder.itemView.context)
                 .load(dokter.fotoUrl)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_doctor_default)
+                .error(R.drawable.ic_doctor_default)
                 .into(ivDoctorPhoto)
+
+            // tombol edit
+            btnEdit.setOnClickListener { onEditClick(dokter.userId) }
+
+            // tombol delete
+            btnDelete.setOnClickListener { onDeleteClick(dokter.userId) }
         }
     }
 
