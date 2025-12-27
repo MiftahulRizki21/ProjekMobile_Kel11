@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.projekmobile_kel11.Preprocessor
-import com.example.projekmobile_kel11.OnnxPredictor
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.data.model.PredictionInput
 import com.example.projekmobile_kel11.utils.MLHelper

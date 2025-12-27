@@ -1,4 +1,4 @@
-package com.example.projekmobile_kel11.fragments
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.os.Bundle
 import android.view.*
@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
-import com.example.projekmobile_kel11.TambahDokterFragment
 import com.example.projekmobile_kel11.adapters.DokterAdapter
 import com.example.projekmobile_kel11.databinding.FragmentKelolaDokterBinding
 import com.example.projekmobile_kel11.models.Dokter

@@ -1,55 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F9FF"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <EditText
-            android:id="@+id/edtNama"
-            android:hint="Nama Dokter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/edtEmail"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/edtPassword"
-            android:hint="Password"
-            android:inputType="textPassword"
+        <!-- ================= FORM CARD ================= -->
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@android:color/white">
 
-        <EditText
-            android:id="@+id/edtSpesialisasi"
-            android:hint="Spesialisasi"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <EditText
-            android:id="@+id/edtFotoUrl"
-            android:hint="URL Foto Dokter"
-            android:inputType="textUri"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambah Dokter"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:layout_marginBottom="12dp"/>
 
-        <Button
-            android:id="@+id/btnSimpan"
-            android:text="Simpan Dokter"
-            android:layout_marginTop="16dp"
+                <EditText
+                    android:id="@+id/edtNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama Dokter"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/edtSpesialisasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Spesialisasi"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/edtSertifikasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Nomor Sertifikasi"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/edtFotoUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="URL Foto Dokter"
+                    android:inputType="textUri"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <EditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"/>
+
+                <Button
+                    android:id="@+id/btnSimpan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan Dokter"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#1E88E5"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ================= PREVIEW CARD ================= -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPreview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:visibility="gone"
+            android:alpha="0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preview Dokter"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#1E88E5"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:id="@+id/tvPreviewNama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Dokter"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvPreviewEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvPreviewSpesialisasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Spesialisasi"
+                    android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvPreviewSertifikasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No. Sertifikasi"
+                    android:layout_marginTop="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvPreviewStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tersedia"
+                    android:textColor="#2E7D32"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </ScrollView>

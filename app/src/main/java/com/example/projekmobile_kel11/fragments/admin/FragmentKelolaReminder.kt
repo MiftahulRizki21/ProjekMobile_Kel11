@@ -1,5 +1,5 @@
 // di dalam file fragments/KelolaReminderFragment.kt
-package com.example.projekmobile_kel11.fragments
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.databinding.ActivityDashboardAdminBinding
-import com.example.projekmobile_kel11.FragmentDashboard
-import com.example.projekmobile_kel11.fragments.KelolaDokterFragment
-import com.example.projekmobile_kel11.fragments.KelolaReminderFragment
+import com.example.projekmobile_kel11.fragments.admin.FragmentDashboard
+import com.example.projekmobile_kel11.fragments.admin.KelolaDokterFragment
+import com.example.projekmobile_kel11.fragments.admin.KelolaReminderFragment
+import com.example.projekmobile_kel11.fragments.admin.KelolaUserFragment
 
 class DashboardAdmin : AppCompatActivity() {
 

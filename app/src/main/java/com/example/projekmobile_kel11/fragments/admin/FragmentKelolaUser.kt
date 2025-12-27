@@ -1,4 +1,4 @@
-package com.example.projekmobile_kel11
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,10 @@ import com.example.projekmobile_kel11.adapters.UserAdapter
 import com.example.projekmobile_kel11.databinding.FragmentKelolaUserBinding
 import com.example.projekmobile_kel11.data.model.User
 import com.google.firebase.database.*
+import android.view.animation.AnimationUtils
+import android.widget.Toast
+import com.example.projekmobile_kel11.R
+
 
 class KelolaUserFragment : Fragment() {
 
@@ -52,15 +56,24 @@ class KelolaUserFragment : Fragment() {
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(
             mutableListOf(),
-            onDeleteClick = { /* kosongkan karena tidak ada delete */ }
+            onDeleteClick = { userId ->
+                val user = userList.find { it.userId == userId }
+                user?.let {
+                    showDeleteConfirmation(it)
+                }
+            }
         )
 
-        binding.rvUsers.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = userAdapter
-        }
-    }
+        binding.rvUsers.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvUsers.adapter = userAdapter
 
+        // Animasi list
+        binding.rvUsers.layoutAnimation =
+            AnimationUtils.loadLayoutAnimation(
+                requireContext(),
+                R.anim.layout_fade_slide
+            )
+    }
 
     // ---------------- Load Users (Pagination) ----------------
     private fun loadUsers() {
@@ -152,6 +165,45 @@ class KelolaUserFragment : Fragment() {
             }
         })
     }
+
+    private fun hapusUser(user: User) {
+        FirebaseDatabase.getInstance()
+            .getReference("users")
+            .child(user.userId)
+            .removeValue()
+            .addOnSuccessListener {
+                userList.removeAll { it.userId == user.userId }
+                filteredList.removeAll { it.userId == user.userId }
+                userAdapter.updateData(
+                    if (isSearching) filteredList else userList
+                )
+
+                Toast.makeText(
+                    requireContext(),
+                    "User berhasil dihapus",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Gagal menghapus user",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun showDeleteConfirmation(user: User) {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Hapus User")
+            .setMessage("Yakin ingin menghapus ${user.nama}?")
+            .setPositiveButton("Hapus") { _, _ ->
+                hapusUser(user)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

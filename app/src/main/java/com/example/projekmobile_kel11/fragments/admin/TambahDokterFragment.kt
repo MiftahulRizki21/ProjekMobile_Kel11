@@ -1,4 +1,4 @@
-package com.example.projekmobile_kel11
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.os.Bundle
 import android.view.*
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.databinding.FragmentTambahDokterBinding
 import com.example.projekmobile_kel11.models.Dokter
 import com.google.firebase.database.*
+import androidx.core.widget.addTextChangedListener
 
 class TambahDokterFragment : Fragment() {
 
@@ -15,7 +16,7 @@ class TambahDokterFragment : Fragment() {
 
     private lateinit var database: DatabaseReference
     private var dokterId: String? = null
-    private var existingPassword: String? = null // ✅ simpan password lama saat edit
+    private var existingPassword: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -29,6 +30,8 @@ class TambahDokterFragment : Fragment() {
 
         database = FirebaseDatabase.getInstance().getReference("users")
         dokterId = arguments?.getString("doctorId")
+
+        setupPreview()
 
         // Jika edit mode, ambil data dokter
         dokterId?.let { id ->
@@ -48,6 +51,45 @@ class TambahDokterFragment : Fragment() {
             simpanDokter()
         }
     }
+    private fun animatePreview(view: View) {
+        view.animate()
+            .scaleX(0.97f)
+            .scaleY(0.97f)
+            .setDuration(120)
+            .withEndAction {
+                view.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .setDuration(120)
+                    .start()
+            }.start()
+    }
+
+    private fun setupPreview() {
+
+        // Munculkan preview card pertama kali
+        binding.cardPreview.visibility = View.VISIBLE
+        binding.cardPreview.animate().alpha(1f).setDuration(300).start()
+
+        binding.edtNama.addTextChangedListener {
+            binding.tvPreviewNama.text = it.toString()
+            animatePreview(binding.cardPreview)
+        }
+
+        binding.edtEmail.addTextChangedListener {
+            binding.tvPreviewEmail.text = it.toString()
+        }
+
+        binding.edtSpesialisasi.addTextChangedListener {
+            binding.tvPreviewSpesialisasi.text = it.toString()
+        }
+
+        binding.edtSertifikasi.addTextChangedListener {
+            binding.tvPreviewSertifikasi.text =
+                "No. Sertifikasi: ${it.toString()}"
+        }
+    }
+
 
     private fun simpanDokter() {
         val nama = binding.edtNama.text.toString()
@@ -89,4 +131,6 @@ class TambahDokterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

@@ -1,9 +1,10 @@
-package com.example.projekmobile_kel11
+package com.example.projekmobile_kel11.ml
 
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.pow
@@ -121,7 +122,7 @@ class Preprocessor(private val context: Context) {
         return Gson().fromJson(json, clazz)
     }
 
-    private fun <T> loadJson(file: String, type: java.lang.reflect.Type): T {
+    private fun <T> loadJson(file: String, type: Type): T {
         val json = context.assets.open(file).bufferedReader().use { it.readText() }
         return Gson().fromJson(json, type)
     }

@@ -1,19 +1,16 @@
-package com.example.projekmobile_kel11
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.FragmentDashboardAdminBinding
 import com.example.projekmobile_kel11.ui.auth.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
-import com.example.projekmobile_kel11.fragments.KelolaDokterFragment
-
-
-
 
 
 class FragmentDashboard : Fragment(R.layout.fragment_dashboard_admin) {

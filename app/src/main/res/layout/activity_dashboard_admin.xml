@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardAdminActivity">
+    tools:context=".DashboardAdmin">
 
     <!-- 1. FrameLayout: Wadah untuk menampilkan konten dari setiap Fragment -->
     <FrameLayout

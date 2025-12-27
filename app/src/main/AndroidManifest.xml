@@ -15,7 +15,7 @@
 
         <!-- 🔹 SPLASH = LAUNCHER -->
         <activity
-            android:name=".ui.auth.SplashActivity"
+            android:name=".DashboardAdmin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,9 +38,9 @@
             android:exported="false" />
 
         <!-- 🔹 ADMIN -->
-        <activity
-            android:name=".DashboardAdmin"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".DashboardAdmin"-->
+<!--            android:exported="false" />-->
 
         <activity
             android:name=".ProfilAdminActivity"

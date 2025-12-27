@@ -1,8 +1,9 @@
-package com.example.projekmobile_kel11
+package com.example.projekmobile_kel11.ml
 
 import ai.onnxruntime.*
 import android.content.Context
 import android.util.Log
+import java.nio.FloatBuffer
 
 class OnnxPredictor(context: Context) {
 
@@ -26,7 +27,7 @@ class OnnxPredictor(context: Context) {
 
         val inputTensor = OnnxTensor.createTensor(
             env,
-            java.nio.FloatBuffer.wrap(input),
+            FloatBuffer.wrap(input),
             longArrayOf(1, input.size.toLong())
         )
 

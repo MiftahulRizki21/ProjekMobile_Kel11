@@ -1,8 +1,8 @@
 package com.example.projekmobile_kel11.utils
 
 import android.content.Context
-import com.example.projekmobile_kel11.OnnxPredictor
-import com.example.projekmobile_kel11.Preprocessor
+import com.example.projekmobile_kel11.ml.OnnxPredictor
+import com.example.projekmobile_kel11.ml.Preprocessor
 import com.example.projekmobile_kel11.data.model.PredictionInput
 
 class MLHelper(context: Context) {
