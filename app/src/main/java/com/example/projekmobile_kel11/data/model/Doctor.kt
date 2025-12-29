@@ -1,6 +1,6 @@
-package com.example.projekmobile_kel11.models
+package com.example.projekmobile_kel11.data.model
 
-data class Dokter(
+data class Doctor(
     var userId: String = "",
     var nama: String = "",
     val password: String = "",

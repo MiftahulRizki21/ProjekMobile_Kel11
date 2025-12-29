@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#F5F9FF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edtMessage"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="Ketik pesan..."
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:src="@android:drawable/ic_menu_send"
+            android:backgroundTint="#1E88E5"
+            android:layout_marginStart="8dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"/>
+    </LinearLayout>
+</LinearLayout>

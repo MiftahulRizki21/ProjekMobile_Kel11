@@ -7,14 +7,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projekmobile_kel11.R
-import com.example.projekmobile_kel11.models.Dokter
+import com.example.projekmobile_kel11.data.model.Doctor
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
 class DokterAdapter(
-    private var list: MutableList<Dokter>,
-    private val onEditClick: (Dokter) -> Unit,
-    private val onDeleteClick: (Dokter) -> Unit
+    private var list: MutableList<Doctor>,
+    private val onEditClick: (Doctor) -> Unit,
+    private val onDeleteClick: (Doctor) -> Unit
 ) : RecyclerView.Adapter<DokterAdapter.DokterViewHolder>() {
 
     inner class DokterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,7 +46,7 @@ class DokterAdapter(
         holder.btnDelete.setOnClickListener { onDeleteClick(dokter) }
     }
 
-    fun updateData(newList: List<Dokter>) {
+    fun updateData(newList: List<Doctor>) {
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()

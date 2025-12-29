@@ -1,29 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dasar -->
+
+    <!-- ================= DASAR ================= -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
-    <!-- Primary Blue (utama: appbar, button utama, navbar) -->
-    <color name="blue_primary">#1E88E5</color>         <!-- Biru sedang, enak di mata -->
-    <color name="blue_primary_dark">#1565C0</color>    <!-- Untuk status bar / pressed -->
-    <color name="blue_primary_light">#BBDEFB</color>   <!-- Background kartu / accent lembut -->
+    <!-- ================= PRIMARY (BIRU DENTIS) ================= -->
+    <color name="blue_primary">#1E88E5</color>
+    <color name="blue_primary_dark">#1565C0</color>
+    <color name="blue_primary_light">#BBDEFB</color>
 
-    <!-- Secondary / Accent -->
-    <color name="teal_accent">#26A69A</color>          <!-- Hijau kebiruan untuk tombol sekunder / chip -->
-    <color name="purple_700">#6A32D5</color>           <!-- Tetap pakai buat highlight tertentu / logo -->
+    <!-- Untuk Bottom Nav & Toolbar -->
+    <color name="colorPrimary">#1E88E5</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorPrimaryVariant">#0D47A1</color>
 
-    <!-- Background & Surface -->
-    <color name="bg_light">#F5F7FB</color>             <!-- Background utama layar -->
-    <color name="surface">#FFFFFFFF</color>            <!-- Card / container putih -->
+    <!-- ================= SECONDARY / ACCENT ================= -->
+    <color name="teal_accent">#26A69A</color>
+    <color name="purple_700">#6A32D5</color>
 
-    <!-- Text -->
+    <!-- ================= BACKGROUND ================= -->
+    <color name="bg_light">#F5F7FB</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="bg_chat">#EEF4FF</color>
+
+    <!-- ================= TEXT ================= -->
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
     <color name="text_on_primary">#FFFFFF</color>
 
-    <!-- Status / Risiko Prediksi -->
-    <color name="risk_low">#4CAF50</color>             <!-- Hijau: Risiko Rendah -->
-    <color name="risk_medium">#FFC107</color>          <!-- Kuning: Risiko Sedang -->
-    <color name="risk_high">#F44336</color>            <!-- Merah: Risiko Tinggi -->
+    <!-- ================= STATUS ================= -->
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC107</color>
+    <color name="error">#F44336</color>
+
+    <!-- ================= RISIKO PREDIKSI ================= -->
+    <color name="risk_low">#4CAF50</color>
+    <color name="risk_medium">#FFC107</color>
+    <color name="risk_high">#F44336</color>
+
+    <!-- ================= DOKTER ================= -->
+    <color name="doctor_available">#2E7D32</color>
+    <color name="doctor_unavailable">#C62828</color>
+
+    <!-- ================= CHAT ================= -->
+    <color name="chat_sender">#1E88E5</color>
+    <color name="chat_receiver">#E3F2FD</color>
+    <color name="chat_input_bg">#FFFFFF</color>
+
+    <!-- ================= BOTTOM NAV ================= -->
+    <color name="bottom_nav_bg">#FFFFFF</color>
+    <color name="bottom_nav_selected">#1E88E5</color>
+    <color name="bottom_nav_unselected">#9E9E9E</color>
+
+    <!-- ================= DIVIDER & SHADOW ================= -->
+    <color name="divider">#E0E0E0</color>
+    <color name="shadow">#33000000</color>
+
 </resources>

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.DokterAdapter
 import com.example.projekmobile_kel11.databinding.FragmentKelolaDokterBinding
-import com.example.projekmobile_kel11.models.Dokter
+import com.example.projekmobile_kel11.data.model.Doctor
 import com.google.firebase.database.*
 
 class KelolaDokterFragment : Fragment() {
@@ -18,7 +18,7 @@ class KelolaDokterFragment : Fragment() {
 
     private lateinit var database: DatabaseReference
     private lateinit var adapter: DokterAdapter
-    private val dokterList = mutableListOf<Dokter>()
+    private val dokterList = mutableListOf<Doctor>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -80,7 +80,7 @@ class KelolaDokterFragment : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     dokterList.clear()
                     for (data in snapshot.children) {
-                        val dokter = data.getValue(Dokter::class.java) ?: continue
+                        val dokter = data.getValue(Doctor::class.java) ?: continue
                         dokterList.add(dokter)
                     }
                     adapter.updateData(dokterList)

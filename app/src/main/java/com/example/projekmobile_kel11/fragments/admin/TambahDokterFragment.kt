@@ -5,7 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.databinding.FragmentTambahDokterBinding
-import com.example.projekmobile_kel11.models.Dokter
+import com.example.projekmobile_kel11.data.model.Doctor
 import com.google.firebase.database.*
 import androidx.core.widget.addTextChangedListener
 
@@ -36,7 +36,7 @@ class TambahDokterFragment : Fragment() {
         // Jika edit mode, ambil data dokter
         dokterId?.let { id ->
             database.child(id).get().addOnSuccessListener { snapshot ->
-                val dokter = snapshot.getValue(Dokter::class.java)
+                val dokter = snapshot.getValue(Doctor::class.java)
                 dokter?.let {
                     binding.edtNama.setText(it.nama)
                     binding.edtEmail.setText(it.email)
@@ -106,7 +106,7 @@ class TambahDokterFragment : Fragment() {
 
         val id = dokterId ?: database.push().key ?: return
 
-        val dokter = Dokter(
+        val dokter = Doctor(
             userId = id,
             nama = nama,
             email = email,

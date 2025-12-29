@@ -13,44 +13,39 @@
         android:theme="@style/Theme.ProjekMobile_Kel11"
         tools:targetApi="31">
 
-        <!-- 🔹 SPLASH = LAUNCHER -->
         <activity
-            android:name=".DashboardAdmin"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".fragments.dokter.DoctorActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ProjekMobile_Kel11">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
         </activity>
-
-        <!-- 🔹 AUTH -->
-        <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ui.auth.RegisterActivity"
-            android:exported="false" />
-
-        <!-- 🔹 USER / DOCTOR -->
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="false" />
-
-        <!-- 🔹 ADMIN -->
+            <!-- 🔹 SPLASH = LAUNCHER -->
 <!--        <activity-->
-<!--            android:name=".DashboardAdmin"-->
+<!--            android:name="."-->
+<!--            android:exported="true">-->
+<!--        </activity> &lt;!&ndash; 🔹 AUTH &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".ui.auth.LoginActivity"-->
 <!--            android:exported="false" />-->
-
-        <activity
-            android:name=".ProfilAdminActivity"
-            android:exported="false" />
-
-        <!-- 🔹 PREDICTION -->
-        <activity
-            android:name=".ui.prediction.PredictionFormActivity"
-            android:exported="false" />
-
+<!--        <activity-->
+<!--            android:name=".ui.auth.RegisterActivity"-->
+<!--            android:exported="false" /> &lt;!&ndash; 🔹 USER / DOCTOR &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".ui.main.MainActivity"-->
+<!--            android:exported="false" /> &lt;!&ndash; 🔹 ADMIN &ndash;&gt;-->
+<!--        &lt;!&ndash; <activity &ndash;&gt;-->
+<!--        &lt;!&ndash; android:name=".DashboardAdmin" &ndash;&gt;-->
+<!--        &lt;!&ndash; android:exported="false" /> &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".ProfilAdminActivity"-->
+<!--            android:exported="false" /> &lt;!&ndash; 🔹 PREDICTION &ndash;&gt;-->
+<!--        <activity-->
+<!--            android:name=".ui.prediction.PredictionFormActivity"-->
+<!--            android:exported="false" />-->
     </application>
 
 </manifest>
