@@ -60,34 +60,46 @@ class FragmentChatDoctor : Fragment() {
     }
 
     private fun setupRecycler() {
-        adapter = ChatAdapter(messages)
-        binding.rvChat.layoutManager = LinearLayoutManager(requireContext())
+        adapter = ChatAdapter(
+            messages,
+            doctorId = "doctorId" // nanti ganti dari auth / consultation
+        )
+        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.stackFromEnd = true
+
+        binding.rvChat.layoutManager = layoutManager
         binding.rvChat.adapter = adapter
+
     }
+
 
     private fun sendMessage() {
         val text = binding.edtMessage.text.toString().trim()
         if (text.isEmpty()) return
 
-        val msg = ChatMessage(
-            senderId = "doctorId",
-            message = text,
-            timestamp = System.currentTimeMillis()
-        )
-
-        FirebaseDatabase.getInstance()
+        val ref = FirebaseDatabase.getInstance()
             .getReference("chats")
             .child(consultationId)
             .push()
-            .setValue(msg)
 
+        val msg = ChatMessage(
+            messageId = ref.key ?: "",
+            senderId = "doctorId",
+            message = text,
+            timestamp = System.currentTimeMillis(),
+            status = "sent"
+        )
+
+        ref.setValue(msg)
         binding.edtMessage.setText("")
     }
+
 
     private fun listenMessages() {
         FirebaseDatabase.getInstance()
             .getReference("chats")
             .child(consultationId)
+            .orderByChild("timestamp") // 🔥 INI KUNCI UTAMANYA
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     messages.clear()
@@ -95,8 +107,29 @@ class FragmentChatDoctor : Fragment() {
                         it.getValue(ChatMessage::class.java)?.let(messages::add)
                     }
                     adapter.notifyDataSetChanged()
-                    if (messages.isNotEmpty())
+
+                    if (messages.isNotEmpty()) {
                         binding.rvChat.scrollToPosition(messages.size - 1)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+
+    }
+    override fun onResume() {
+        super.onResume()
+
+        FirebaseDatabase.getInstance()
+            .getReference("chats")
+            .child(consultationId)
+            .orderByChild("status")
+            .equalTo("delivered")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        it.ref.child("status").setValue("read")
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {}

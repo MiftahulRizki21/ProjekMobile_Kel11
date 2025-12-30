@@ -5,8 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.example.projekmobile_kel11.data.model.Doctor
 import com.example.projekmobile_kel11.databinding.FragmentDashboardDokterBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.example.projekmobile_kel11.R
 
 class DokterDashboardFragment : Fragment() {
 
@@ -65,6 +71,29 @@ class DokterDashboardFragment : Fragment() {
         binding.switchAvailability.setOnCheckedChangeListener { _, isChecked ->
             ref.setValue(isChecked)
         }
+    }
+    private fun loadDoctorProfile() {
+        val doctorId = "doc_001" // nanti bisa dari FirebaseAuth
+
+        FirebaseDatabase.getInstance()
+            .getReference("doctors")
+            .child(doctorId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val doctor = snapshot.getValue(Doctor::class.java) ?: return
+
+                    binding.tvDoctorName.text = doctor.nama
+                    binding.tvDoctorSpecialist.text = doctor.spesialisasi
+
+                    Glide.with(requireContext())
+                        .load(doctor.fotoUrl)
+                        .placeholder(R.drawable.ic_doctor_default)
+                        .into(binding.imgDoctor)
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
     override fun onDestroyView() {
