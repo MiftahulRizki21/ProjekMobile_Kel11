@@ -10,6 +10,7 @@ import com.example.projekmobile_kel11.databinding.ItemUserBinding
 
 class UserAdapter(
     private var users: MutableList<User>,
+    private val onItemClick: (User) -> Unit,
     private val onDeleteClick: (userId: String) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -33,9 +34,17 @@ class UserAdapter(
                 .error(R.drawable.ic_launcher_foreground)
                 .into(ivUserPhoto)
 
-            btnDeleteUser.setOnClickListener { onDeleteClick(user.userId) }
+            // 🔥 KLIK ITEM
+            root.setOnClickListener {
+                onItemClick(user)
+            }
+
+            btnDeleteUser.setOnClickListener {
+                onDeleteClick(user.userId)
+            }
         }
     }
+
 
     override fun getItemCount() = users.size
 
