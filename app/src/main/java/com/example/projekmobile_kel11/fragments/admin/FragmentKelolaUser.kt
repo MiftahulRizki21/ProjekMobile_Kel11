@@ -55,7 +55,13 @@ class KelolaUserFragment : Fragment() {
     // ---------------- RecyclerView ----------------
     private fun setupRecyclerView() {
         userAdapter = UserAdapter(
-            mutableListOf(),
+            users = mutableListOf(),
+
+            // 🔥 Admin TIDAK pakai klik item
+            onItemClick = { _ ->
+                // tidak ada aksi
+            },
+
             onDeleteClick = { userId ->
                 val user = userList.find { it.userId == userId }
                 user?.let {
@@ -67,13 +73,13 @@ class KelolaUserFragment : Fragment() {
         binding.rvUsers.layoutManager = LinearLayoutManager(requireContext())
         binding.rvUsers.adapter = userAdapter
 
-        // Animasi list
         binding.rvUsers.layoutAnimation =
             AnimationUtils.loadLayoutAnimation(
                 requireContext(),
                 R.anim.layout_fade_slide
             )
     }
+
 
     // ---------------- Load Users (Pagination) ----------------
     private fun loadUsers() {
