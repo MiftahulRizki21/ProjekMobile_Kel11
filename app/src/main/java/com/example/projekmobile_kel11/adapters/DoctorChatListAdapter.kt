@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projekmobile_kel11.data.model.Consultation
-import com.example.projekmobile_kel11.databinding.ItemChatBinding
 import com.example.projekmobile_kel11.databinding.ItemChatListBinding
 
 class DoctorChatListAdapter(
