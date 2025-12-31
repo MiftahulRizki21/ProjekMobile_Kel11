@@ -53,19 +53,63 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkRole(uid: String) {
-        db.child("users").child(uid).child("role").get()
-            .addOnSuccessListener {
-                when (it.value.toString()) {
-                    "admin" -> {
-                        startActivity(Intent(this, DashboardAdmin::class.java))
+        val userRef = db.child("users").child(uid)
+
+        userRef.get()
+            .addOnSuccessListener { snapshot ->
+
+                // 🔹 Kalau user BELUM ADA di Realtime DB
+                if (!snapshot.exists()) {
+                    val firebaseUser = auth.currentUser!!
+
+                    val now = System.currentTimeMillis()
+                    val userData = mapOf(
+                        "name" to (firebaseUser.displayName ?: ""),
+                        "email" to (firebaseUser.email ?: ""),
+                        "role" to "user", // default
+                        "gender" to "",
+                        "age" to 0,
+                        "phone" to "",
+                        "photoUrl" to "",
+                        "createdAt" to now,
+                        "updatedAt" to now
+                    )
+
+                    userRef.setValue(userData)
+                        .addOnSuccessListener {
+                            openMainByRole("user")
+                        }
+
+                } else {
+                    val role = snapshot.child("role").getValue(String::class.java)
+
+                    when (role) {
+                        "admin" -> openAdmin()
+                        "doctor", "user" -> openMain()
+                        else -> toast("Role tidak valid")
                     }
-                    "doctor", "user" -> {
-                        startActivity(Intent(this, MainActivity::class.java))
-                    }
-                    else -> toast("Role tidak valid")
                 }
-                finish()
             }
+            .addOnFailureListener {
+                toast("Gagal mengambil data user")
+            }
+    }
+
+    private fun openAdmin() {
+        startActivity(Intent(this, DashboardAdmin::class.java))
+        finish()
+    }
+
+    private fun openMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun openMainByRole(role: String) {
+        when (role) {
+            "admin" -> openAdmin()
+            else -> openMain()
+        }
     }
 
     private fun toast(msg: String) {

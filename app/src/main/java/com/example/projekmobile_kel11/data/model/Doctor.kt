@@ -3,7 +3,6 @@ package com.example.projekmobile_kel11.data.model
 data class Doctor(
     var userId: String = "",
     var nama: String = "",
-    val password: String = "",
     var email: String = "",
     var spesialisasi: String = "",
     var fotoUrl: String = "",

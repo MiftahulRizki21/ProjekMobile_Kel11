@@ -4,19 +4,21 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.core.widget.addTextChangedListener
 import com.example.projekmobile_kel11.databinding.FragmentTambahDokterBinding
 import com.example.projekmobile_kel11.data.model.Doctor
-import com.google.firebase.database.*
-import androidx.core.widget.addTextChangedListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class TambahDokterFragment : Fragment() {
 
     private var _binding: FragmentTambahDokterBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: DatabaseReference
-    private var dokterId: String? = null
-    private var existingPassword: String? = null
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val database by lazy {
+        FirebaseDatabase.getInstance().getReference("users")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -28,52 +30,18 @@ class TambahDokterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        database = FirebaseDatabase.getInstance().getReference("users")
-        dokterId = arguments?.getString("doctorId")
-
         setupPreview()
-
-        // Jika edit mode, ambil data dokter
-        dokterId?.let { id ->
-            database.child(id).get().addOnSuccessListener { snapshot ->
-                val dokter = snapshot.getValue(Doctor::class.java)
-                dokter?.let {
-                    binding.edtNama.setText(it.nama)
-                    binding.edtEmail.setText(it.email)
-                    binding.edtSpesialisasi.setText(it.spesialisasi)
-                    binding.edtFotoUrl.setText(it.fotoUrl)
-                    existingPassword = it.password // simpan password lama
-                }
-            }
-        }
 
         binding.btnSimpan.setOnClickListener {
             simpanDokter()
         }
     }
-    private fun animatePreview(view: View) {
-        view.animate()
-            .scaleX(0.97f)
-            .scaleY(0.97f)
-            .setDuration(120)
-            .withEndAction {
-                view.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(120)
-                    .start()
-            }.start()
-    }
 
     private fun setupPreview() {
-
-        // Munculkan preview card pertama kali
         binding.cardPreview.visibility = View.VISIBLE
-        binding.cardPreview.animate().alpha(1f).setDuration(300).start()
 
         binding.edtNama.addTextChangedListener {
             binding.tvPreviewNama.text = it.toString()
-            animatePreview(binding.cardPreview)
         }
 
         binding.edtEmail.addTextChangedListener {
@@ -90,47 +58,51 @@ class TambahDokterFragment : Fragment() {
         }
     }
 
-
     private fun simpanDokter() {
-        val nama = binding.edtNama.text.toString()
-        val email = binding.edtEmail.text.toString()
-        val spesialisasi = binding.edtSpesialisasi.text.toString()
-        val fotoUrl = binding.edtFotoUrl.text.toString()
-        val password = binding.edtPassword.text.toString()
+        val nama = binding.edtNama.text.toString().trim()
+        val email = binding.edtEmail.text.toString().trim()
+        val spesialisasi = binding.edtSpesialisasi.text.toString().trim()
+        val fotoUrl = binding.edtFotoUrl.text.toString().trim()
+        val password = binding.edtPassword.text.toString().trim()
 
-        // Validasi wajib diisi
-        if (nama.isEmpty() || email.isEmpty() || spesialisasi.isEmpty() || (dokterId == null && password.isEmpty())) {
-            Toast.makeText(context, "Data wajib diisi", Toast.LENGTH_SHORT).show()
+        if (nama.isEmpty() || email.isEmpty() || spesialisasi.isEmpty() || password.isEmpty()) {
+            toast("Semua data wajib diisi")
             return
         }
 
-        val id = dokterId ?: database.push().key ?: return
-
-        val dokter = Doctor(
-            userId = id,
-            nama = nama,
-            email = email,
-            spesialisasi = spesialisasi,
-            fotoUrl = fotoUrl,
-            role = "doctor",
-            password = if (password.isNotEmpty()) password else existingPassword ?: ""
-        )
-
-        database.child(id).setValue(dokter)
+        // 1️⃣ Buat akun dokter di Firebase Authentication
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                val message = if (dokterId == null) "Dokter berhasil ditambahkan" else "Dokter berhasil diupdate"
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack() // kembali ke KelolaDokterFragment
+                val uid = it.user!!.uid
+                val now = System.currentTimeMillis()
+
+                // 2️⃣ Simpan data dokter ke Realtime Database (TANPA PASSWORD)
+                val dokter = Doctor(
+                    userId = uid,
+                    nama = nama,
+                    email = email,
+                    spesialisasi = spesialisasi,
+                    fotoUrl = fotoUrl,
+                    role = "doctor"
+                )
+
+                database.child(uid).setValue(dokter)
+                    .addOnSuccessListener {
+                        toast("Dokter berhasil ditambahkan")
+                        parentFragmentManager.popBackStack()
+                    }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Gagal menyimpan dokter", Toast.LENGTH_SHORT).show()
+                toast(it.message ?: "Gagal membuat akun dokter")
             }
+    }
+
+    private fun toast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
