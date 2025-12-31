@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projekmobile_kel11.DashboardAdmin
 import com.example.projekmobile_kel11.databinding.ActivityLoginBinding
+import com.example.projekmobile_kel11.fragments.dokter.DoctorActivity
 import com.example.projekmobile_kel11.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -25,10 +26,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance().reference
 
-        binding.btnLogin.setOnClickListener {
-            login()
-        }
-
+        binding.btnLogin.setOnClickListener { login() }
         binding.btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -57,16 +55,15 @@ class LoginActivity : AppCompatActivity() {
 
         userRef.get()
             .addOnSuccessListener { snapshot ->
-
-                // 🔹 Kalau user BELUM ADA di Realtime DB
                 if (!snapshot.exists()) {
+                    // USER BARU → BUAT DATA DEFAULT
                     val firebaseUser = auth.currentUser!!
-
                     val now = System.currentTimeMillis()
+
                     val userData = mapOf(
                         "name" to (firebaseUser.displayName ?: ""),
                         "email" to (firebaseUser.email ?: ""),
-                        "role" to "user", // default
+                        "role" to "user",
                         "gender" to "",
                         "age" to 0,
                         "phone" to "",
@@ -75,19 +72,12 @@ class LoginActivity : AppCompatActivity() {
                         "updatedAt" to now
                     )
 
-                    userRef.setValue(userData)
-                        .addOnSuccessListener {
-                            openMainByRole("user")
-                        }
-
+                    userRef.setValue(userData).addOnSuccessListener {
+                        openUser()
+                    }
                 } else {
                     val role = snapshot.child("role").getValue(String::class.java)
-
-                    when (role) {
-                        "admin" -> openAdmin()
-                        "doctor", "user" -> openMain()
-                        else -> toast("Role tidak valid")
-                    }
+                    openByRole(role)
                 }
             }
             .addOnFailureListener {
@@ -95,21 +85,28 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun openByRole(role: String?) {
+        when (role) {
+            "admin" -> openAdmin()
+            "doctor" -> openDoctor()
+            "user" -> openUser()
+            else -> toast("Role tidak valid")
+        }
+    }
+
     private fun openAdmin() {
         startActivity(Intent(this, DashboardAdmin::class.java))
         finish()
     }
 
-    private fun openMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+    private fun openDoctor() {
+        startActivity(Intent(this, DoctorActivity::class.java))
         finish()
     }
 
-    private fun openMainByRole(role: String) {
-        when (role) {
-            "admin" -> openAdmin()
-            else -> openMain()
-        }
+    private fun openUser() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     private fun toast(msg: String) {
