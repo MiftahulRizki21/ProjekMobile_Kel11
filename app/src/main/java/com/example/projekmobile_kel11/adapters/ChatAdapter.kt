@@ -65,14 +65,18 @@ class ChatAdapter(
                 else -> ""
             }
 
-            if (msg.status == "read") {
-                holder.binding.tvStatus.setTextColor(
-                    ContextCompat.getColor(
-                        holder.itemView.context,
-                        R.color.blue_primary
-                    )
-                )
-            }
+            val defaultColor = ContextCompat.getColor(
+                holder.itemView.context,
+                R.color.text_secondary
+            )
+
+            holder.binding.tvStatus.setTextColor(
+                if (msg.status == "read")
+                    ContextCompat.getColor(holder.itemView.context, R.color.blue_primary)
+                else
+                    defaultColor
+            )
+
 
         } else if (holder is UserVH) {
             holder.binding.tvName.text = "Pasien"

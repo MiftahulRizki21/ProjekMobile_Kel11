@@ -1,9 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#F5F9FF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarChat"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        android:elevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Back -->
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Foto Profil -->
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_launcher_background"
+                android:background="@drawable/bg_circle_blue"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="12dp"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Nama -->
+            <TextView
+                android:id="@+id/tvChatTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nama"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@id/imgProfile"
+                app:layout_constraintTop_toTopOf="@id/imgProfile"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="12dp"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
@@ -11,6 +67,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="8dp"/>
+
 
     <LinearLayout
         android:orientation="horizontal"

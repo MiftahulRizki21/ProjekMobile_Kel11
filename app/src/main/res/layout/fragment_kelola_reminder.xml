@@ -39,5 +39,13 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="80dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_edit"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_anchor="@id/rv_reminders"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -35,7 +35,7 @@
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/iv_reminder_icon"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_delete_reminder"
+            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
             tools:text="Minum Obat Paracetamol" />
 
         <TextView
@@ -50,16 +50,26 @@
             tools:text="Pukul 08:00 - oleh Budi Santoso" />
 
         <ImageButton
-            android:id="@+id/btn_delete_reminder"
+            android:id="@+id/btn_delete"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_launcher_background"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@android:color/holo_red_light"
+            android:contentDescription="Hapus reminder"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toTopOf="@+id/switchActive"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:tint="@android:color/holo_red_light" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchActive"
+            android:layout_width="41dp"
+            android:layout_height="46dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="Hapus reminder" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_delete"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

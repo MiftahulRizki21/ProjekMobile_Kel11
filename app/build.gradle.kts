@@ -68,17 +68,20 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     // Firebase (sudah benar)
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
     // Navigation (untuk side navbar + fragment)
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    implementation ("com.google.firebase:firebase-firestore-ktx")
 
     // Lifecycle ViewModel (kalau mau pisah logic ML ke ViewModel)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.23.2")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
 }

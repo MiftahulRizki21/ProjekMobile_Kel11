@@ -1,9 +1,22 @@
-// di dalam file models/Reminder.kt
 package com.example.projekmobile_kel11.data.model
 
+import com.google.firebase.Timestamp
+
 data class Reminder(
-    val id: String,
-    val judul: String,
-    val waktu: String,
-    val namaUser: String // Untuk tahu reminder ini milik siapa
-)
+    var id: String = "",
+    var title: String? = "",
+    var hour: Int = 0,
+    var minute: Int = 0,
+    var userName: String? = "",
+    var isActive: Boolean = true,
+    var nextTrigger: Timestamp? = null
+) {
+    // 🔥 WAJIB untuk Firestore
+    constructor() : this("", "", 0, 0, "", true, null)
+}
+
+
+
+
+
+

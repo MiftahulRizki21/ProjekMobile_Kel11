@@ -11,6 +11,7 @@ import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.ChatAdapter
 import com.example.projekmobile_kel11.data.model.ChatMessage
 import com.example.projekmobile_kel11.databinding.FragmentChatDoctorBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,7 +25,8 @@ class FragmentChatDoctor : Fragment() {
     private lateinit var consultationId: String
     private lateinit var adapter: ChatAdapter
     private val messages = mutableListOf<ChatMessage>()
-
+    val auth = FirebaseAuth.getInstance()
+    val doctorId = auth.currentUser?.uid
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,8 +51,16 @@ class FragmentChatDoctor : Fragment() {
 
         setupRecycler()
         listenMessages()
+        loadChatTitle()
+        setupToolbar()
 
         binding.btnSend.setOnClickListener { sendMessage() }
+    }
+
+    private fun setupToolbar() {
+        binding.btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
 
@@ -60,16 +70,49 @@ class FragmentChatDoctor : Fragment() {
     }
 
     private fun setupRecycler() {
-        adapter = ChatAdapter(
-            messages,
-            doctorId = "doctorId" // nanti ganti dari auth / consultation
-        )
+        val doctorId = auth.currentUser?.uid
+            ?: throw IllegalStateException("Doctor belum login")
+
+        adapter = ChatAdapter(messages, doctorId)
         val layoutManager = LinearLayoutManager(requireContext())
         layoutManager.stackFromEnd = true
 
         binding.rvChat.layoutManager = layoutManager
         binding.rvChat.adapter = adapter
+    }
+    private fun loadChatTitle() {
+        val consultationRef = FirebaseDatabase.getInstance()
+            .getReference("consultations")
+            .child(consultationId)
 
+        consultationRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userId = snapshot.child("userId").getValue(String::class.java)
+                    ?: return
+
+                loadUserName(userId)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun loadUserName(userId: String) {
+        FirebaseDatabase.getInstance()
+            .getReference("users")
+            .child(userId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val name =
+                        snapshot.child("name").getValue(String::class.java)
+                            ?: snapshot.child("nama").getValue(String::class.java)
+                            ?: "Pasien"
+
+                    binding.tvChatTitle.text = name
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
     }
 
 
@@ -77,22 +120,36 @@ class FragmentChatDoctor : Fragment() {
         val text = binding.edtMessage.text.toString().trim()
         if (text.isEmpty()) return
 
-        val ref = FirebaseDatabase.getInstance()
+        val senderId = auth.currentUser?.uid
+        if (senderId == null) {
+            Toast.makeText(requireContext(), "Dokter belum login", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val chatRef = FirebaseDatabase.getInstance()
             .getReference("chats")
             .child(consultationId)
             .push()
 
         val msg = ChatMessage(
-            messageId = ref.key ?: "",
-            senderId = "doctorId",
+            messageId = chatRef.key ?: "",
+            senderId = senderId,
             message = text,
             timestamp = System.currentTimeMillis(),
             status = "sent"
         )
 
-        ref.setValue(msg)
-        binding.edtMessage.setText("")
+        chatRef.setValue(msg)
+            .addOnSuccessListener {
+                updateLastMessage(text)
+                binding.edtMessage.setText("")
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Gagal mengirim pesan", Toast.LENGTH_SHORT).show()
+            }
     }
+
+
 
 
     private fun listenMessages() {
@@ -147,4 +204,17 @@ class FragmentChatDoctor : Fragment() {
             }
         }
     }
+
+    private fun updateLastMessage(message: String) {
+        val updateMap = mapOf(
+            "lastMessage" to message,
+            "lastTimestamp" to System.currentTimeMillis()
+        )
+
+        FirebaseDatabase.getInstance()
+            .getReference("consultations")
+            .child(consultationId)
+            .updateChildren(updateMap)
+    }
+
 }

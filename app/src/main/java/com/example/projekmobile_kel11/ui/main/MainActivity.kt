@@ -1,5 +1,7 @@
 package com.example.projekmobile_kel11.ui.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -11,11 +13,15 @@ import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.ActivityMainBinding
 import com.example.projekmobile_kel11.ui.prediction.PredictionFormActivity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Log
 import com.example.projekmobile_kel11.ui.main.HomeFragment
 import com.example.projekmobile_kel11.ui.profile.ProfileFragment
 import com.example.projekmobile_kel11.ui.education.EducationFragment
 import com.example.projekmobile_kel11.ui.consultation.ConsultationFragment
 import com.example.projekmobile_kel11.ui.clinic.ClinicLocationFragment
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +32,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        createNotificationChannel()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    1001
+                )
+            }
+        }
+
 
         setSupportActionBar(binding.toolbar)
 
@@ -77,4 +96,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             super.onBackPressed()
         }
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "REMINDER_CHANNEL",
+                "Reminder Notification",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            getSystemService(NotificationManager::class.java)
+                .createNotificationChannel(channel)
+        }
+    }
+
+
 }
