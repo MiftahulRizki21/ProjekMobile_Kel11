@@ -1,24 +1,28 @@
 package com.example.projekmobile_kel11.fragments.dokter
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.data.model.Doctor
 import com.example.projekmobile_kel11.databinding.FragmentDashboardDokterBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.example.projekmobile_kel11.ui.auth.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.example.projekmobile_kel11.R
 
 class DokterDashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardDokterBinding? = null
     private val binding get() = _binding!!
-    private val doctorId = "doctorId"
+
+    private lateinit var doctorId: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true) // ⬅️ AKTIFKAN MENU LOGOUT
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,35 +33,60 @@ class DokterDashboardFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        doctorId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        loadDoctorProfile()
         loadStatistics()
         setupAvailability()
     }
 
-    private fun loadStatistics() {
-        val db = FirebaseDatabase.getInstance()
+    // ===================== PROFIL DOKTER =====================
+    private fun loadDoctorProfile() {
+        FirebaseDatabase.getInstance()
+            .getReference("doctors")
+            .child(doctorId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if (!snapshot.exists()) return@addOnSuccessListener
 
-        // Total pasien (unik)
-        db.getReference("consultations")
+                val doctor = snapshot.getValue(Doctor::class.java) ?: return@addOnSuccessListener
+
+                binding.tvDoctorName.text = doctor.nama
+                binding.tvDoctorSpecialist.text = doctor.spesialisasi
+
+                Glide.with(requireContext())
+                    .load(doctor.fotoUrl)
+                    .placeholder(R.drawable.ic_doctor_default)
+                    .error(R.drawable.ic_doctor_default)
+                    .into(binding.imgDoctor)
+            }
+    }
+
+    // ===================== STATISTIK =====================
+    private fun loadStatistics() {
+        FirebaseDatabase.getInstance()
+            .getReference("consultations")
             .orderByChild("doctorId")
             .equalTo(doctorId)
             .get()
             .addOnSuccessListener { snapshot ->
                 val pasienSet = mutableSetOf<String>()
-                var aktif = 0
+                var konsultasiAktif = 0
 
-                snapshot.children.forEach {
-                    val userId = it.child("userId").value?.toString()
-                    val status = it.child("status").value?.toString()
+                snapshot.children.forEach { data ->
+                    val userId = data.child("userId").value?.toString()
+                    val status = data.child("status").value?.toString()
 
-                    userId?.let { id -> pasienSet.add(id) }
-                    if (status == "ongoing") aktif++
+                    userId?.let { pasienSet.add(it) }
+                    if (status == "ongoing") konsultasiAktif++
                 }
 
                 binding.tvTotalPasien.text = pasienSet.size.toString()
-                binding.tvKonsultasiAktif.text = aktif.toString()
+                binding.tvKonsultasiAktif.text = konsultasiAktif.toString()
             }
     }
 
+    // ===================== AVAILABILITY =====================
     private fun setupAvailability() {
         val ref = FirebaseDatabase.getInstance()
             .getReference("doctors")
@@ -65,35 +94,36 @@ class DokterDashboardFragment : Fragment() {
             .child("available")
 
         ref.get().addOnSuccessListener {
-            binding.switchAvailability.isChecked = it.getValue(Boolean::class.java) ?: false
+            binding.switchAvailability.isChecked =
+                it.getValue(Boolean::class.java) ?: false
         }
 
         binding.switchAvailability.setOnCheckedChangeListener { _, isChecked ->
             ref.setValue(isChecked)
         }
     }
-    private fun loadDoctorProfile() {
-        val doctorId = "doc_001" // nanti bisa dari FirebaseAuth
 
-        FirebaseDatabase.getInstance()
-            .getReference("doctors")
-            .child(doctorId)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+    // ===================== MENU LOGOUT =====================
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_doctor_dashboard, menu)
+    }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val doctor = snapshot.getValue(Doctor::class.java) ?: return
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                logout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
-                    binding.tvDoctorName.text = doctor.nama
-                    binding.tvDoctorSpecialist.text = doctor.spesialisasi
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
 
-                    Glide.with(requireContext())
-                        .load(doctor.fotoUrl)
-                        .placeholder(R.drawable.ic_doctor_default)
-                        .into(binding.imgDoctor)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
