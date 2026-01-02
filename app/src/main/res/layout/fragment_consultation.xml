@@ -11,13 +11,18 @@
         android:text="Konsultasi Dokter Gigi"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nantinya di sini akan ada daftar dokter yang tersedia untuk konsultasi."
+        android:text="Pilih dokter untuk memulai konsultasi"
         android:textSize="14sp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="12dp" />
 
+    <!-- 🔥 INI YANG TADI KURANG -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -32,11 +32,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_education -> loadFragment(EducationFragment())
                 R.id.nav_consultation -> loadFragment(ConsultationFragment())
                 R.id.nav_profile -> loadFragment(ProfileFragment())
-
-                R.id.nav_prediction -> {
-                    // boleh Activity atau Fragment
-                    startActivity(Intent(this, PredictionFormActivity::class.java))
-                }
+                R.id.nav_prediction -> startActivity(Intent(this, PredictionFormActivity::class.java))
             }
             true
         }
@@ -46,5 +42,14 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    // 🔹 Fungsi publik untuk show/hide bottom nav
+    fun showBottomNav() {
+        binding.bottomNav.visibility = android.view.View.VISIBLE
+    }
+
+    fun hideBottomNav() {
+        binding.bottomNav.visibility = android.view.View.GONE
     }
 }

@@ -1,19 +1,17 @@
 package com.example.projekmobile_kel11.fragments.dokter
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.DoctorChatListAdapter
 import com.example.projekmobile_kel11.data.model.Consultation
 import com.example.projekmobile_kel11.databinding.FragmentDoctorChatListBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class FragmentDoctorChatList : Fragment() {
 
@@ -22,8 +20,12 @@ class FragmentDoctorChatList : Fragment() {
 
     private val list = mutableListOf<Consultation>()
     private lateinit var adapter: DoctorChatListAdapter
+    private lateinit var doctorId: String
 
-    private val doctorId = "doc_001" // dari FirebaseAuth nanti
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        doctorId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,6 @@ class FragmentDoctorChatList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = DoctorChatListAdapter(list) { consultation ->
             val fragment = FragmentChatDoctor.newInstance(consultation.consultationId)
-
             parentFragmentManager.beginTransaction()
                 .replace(R.id.doctor_container, fragment)
                 .addToBackStack(null)
@@ -49,12 +50,9 @@ class FragmentDoctorChatList : Fragment() {
         loadChats()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun loadChats() {
+        if (doctorId.isEmpty()) return
+
         FirebaseDatabase.getInstance()
             .getReference("consultations")
             .orderByChild("doctorId")
@@ -62,14 +60,8 @@ class FragmentDoctorChatList : Fragment() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     list.clear()
-                    snapshot.children.forEach { snap ->
-                        val c = snap.getValue(Consultation::class.java)
-                        val key = snap.key
-
-                        if (c != null && !key.isNullOrEmpty()) {
-                            c.consultationId = key
-                            list.add(c)
-                        }
+                    snapshot.children.forEach {
+                        it.getValue(Consultation::class.java)?.let(list::add)
                     }
                     adapter.notifyDataSetChanged()
                 }
@@ -77,4 +69,10 @@ class FragmentDoctorChatList : Fragment() {
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
+

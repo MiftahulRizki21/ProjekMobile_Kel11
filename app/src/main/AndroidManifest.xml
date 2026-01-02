@@ -63,6 +63,10 @@
             android:name=".receiver.ReminderReceiver"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.consultation.ChatActivity"
+            android:exported="false" />
+
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
