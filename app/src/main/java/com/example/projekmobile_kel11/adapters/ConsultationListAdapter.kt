@@ -1,4 +1,4 @@
-package com.example.projekmobile_kel11.ui.consultation
+package com.example.projekmobile_kel11.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -19,17 +19,19 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- ================= FRAGMENT CONTAINER ================= -->
-    <FrameLayout
-        android:id="@+id/doctor_container"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="96dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
 
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <!-- ================= BOTTOM NAV ================= -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -55,5 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

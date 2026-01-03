@@ -15,5 +15,9 @@
         android:id="@+id/menu_chat"
         android:title="Chat"
         android:icon="@drawable/ic_edit"/>
+    <item
+        android:id="@+id/menu_schedule"
+        android:icon="@drawable/ic_edit"
+        android:title="Jadwal"/>
 
 </menu>

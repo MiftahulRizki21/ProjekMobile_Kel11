@@ -1,5 +1,6 @@
 package com.example.projekmobile_kel11.fragments.dokter
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -21,6 +22,7 @@ class DokterDashboardFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(true) // ⬅️ AKTIFKAN MENU LOGOUT
     }
 
@@ -34,10 +36,33 @@ class DokterDashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         doctorId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        binding.cardLogout.setOnClickListener {
+            showLogoutDialog()
+        }
 
         loadDoctorProfile()
         loadStatistics()
         setupAvailability()
+    }
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Logout")
+            .setMessage("Apakah Anda yakin ingin keluar?")
+            .setPositiveButton("Ya") { _, _ ->
+                FirebaseDatabase.getInstance()
+                    .getReference("doctors")
+                    .child(doctorId)
+                    .child("available")
+                    .setValue(false)
+
+                FirebaseAuth.getInstance().signOut()
+
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
     }
 
     // ===================== PROFIL DOKTER =====================

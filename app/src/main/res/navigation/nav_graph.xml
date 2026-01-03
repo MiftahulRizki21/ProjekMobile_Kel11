@@ -1,28 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/dokterDashboardFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.projekmobile_kel11.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/dokterDashboardFragment"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.DokterDashboardFragment"
+        android:label="Dashboard Dokter" />
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.projekmobile_kel11.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/doctorPasienFragment"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.DoctorPasienFragment"
+        android:label="Pasien Dokter" />
+
+    <fragment
+        android:id="@+id/fragmentDoctorChatList"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.FragmentDoctorChatList"
+        android:label="Chat Dokter" />
+
+    <fragment
+        android:id="@+id/dokterScheduleFragment"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.DokterScheduleFragment"
+        android:label="Jadwal Dokter">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_to_addSchedule"
+            app:destination="@id/addScheduleFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/addScheduleFragment"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.AddScheduleFragment"
+        android:label="Tambah Jadwal"/>
 </navigation>

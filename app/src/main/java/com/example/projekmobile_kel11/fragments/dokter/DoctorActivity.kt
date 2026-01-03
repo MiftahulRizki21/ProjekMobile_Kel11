@@ -15,22 +15,26 @@ class DoctorActivity : AppCompatActivity() {
         binding = ActivityDoctorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // default fragment
-        loadFragment(DokterDashboardFragment())
+        val navController =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                ?.let { it as androidx.navigation.fragment.NavHostFragment }
+                ?.navController
 
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.menu_dashboard -> loadFragment(DokterDashboardFragment())
-                R.id.menu_pasien -> loadFragment(DoctorPasienFragment())
-                R.id.menu_chat -> loadFragment(FragmentDoctorChatList())
+                R.id.menu_dashboard ->
+                    navController?.navigate(R.id.dokterDashboardFragment)
+
+                R.id.menu_pasien ->
+                    navController?.navigate(R.id.doctorPasienFragment)
+
+                R.id.menu_chat ->
+                    navController?.navigate(R.id.fragmentDoctorChatList)
+
+                R.id.menu_schedule ->
+                    navController?.navigate(R.id.dokterScheduleFragment)
             }
             true
         }
-    }
-
-    private fun loadFragment(fragment: androidx.fragment.app.Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.doctor_container, fragment)
-            .commit()
     }
 }

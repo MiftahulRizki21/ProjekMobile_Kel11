@@ -39,7 +39,7 @@ class FragmentDoctorChatList : Fragment() {
         adapter = DoctorChatListAdapter(list) { consultation ->
             val fragment = FragmentChatDoctor.newInstance(consultation.consultationId)
             parentFragmentManager.beginTransaction()
-                .replace(R.id.doctor_container, fragment)
+                .replace(R.id.nav_host_fragment, fragment)
                 .addToBackStack(null)
                 .commit()
         }
