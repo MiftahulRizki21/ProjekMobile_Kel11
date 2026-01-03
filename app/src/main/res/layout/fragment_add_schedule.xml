@@ -10,6 +10,12 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/btnDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilih Tanggal" />
+
+    <Button
         android:id="@+id/btnStart"
         android:text="Pilih Jam Mulai"
         android:layout_width="match_parent"

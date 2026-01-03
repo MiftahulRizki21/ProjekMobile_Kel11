@@ -77,4 +77,11 @@
             android:contentDescription="Edit dokter" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.card.MaterialCardView>
+
 </com.google.android.material.card.MaterialCardView>

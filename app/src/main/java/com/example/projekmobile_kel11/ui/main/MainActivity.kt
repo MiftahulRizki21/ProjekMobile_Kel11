@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.ActivityMainBinding
+import com.example.projekmobile_kel11.fragments.user.UserDoctorListFragment
 import com.example.projekmobile_kel11.ui.consultation.ConsultationFragment
 import com.example.projekmobile_kel11.ui.education.EducationFragment
 import com.example.projekmobile_kel11.ui.prediction.PredictionFormActivity
 import com.example.projekmobile_kel11.ui.profile.ProfileFragment
+import com.example.projekmobile_kel11.fragments.user.UserScheduleFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,11 +33,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> loadFragment(HomeFragment())
                 R.id.nav_education -> loadFragment(EducationFragment())
                 R.id.nav_consultation -> loadFragment(ConsultationFragment())
+                R.id.nav_schedule -> loadFragment(UserScheduleFragment()) // ✅ TAMBAHAN
                 R.id.nav_profile -> loadFragment(ProfileFragment())
-                R.id.nav_prediction -> startActivity(Intent(this, PredictionFormActivity::class.java))
+                R.id.nav_prediction -> {
+                    startActivity(Intent(this, PredictionFormActivity::class.java))
+                }
             }
             true
         }
+
     }
 
     private fun loadFragment(fragment: Fragment) {

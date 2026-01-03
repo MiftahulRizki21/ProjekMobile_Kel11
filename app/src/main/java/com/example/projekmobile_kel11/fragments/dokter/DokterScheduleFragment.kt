@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.ScheduleDayAdapter
 import com.example.projekmobile_kel11.adapters.WeeklyScheduleAdapter
-import com.example.projekmobile_kel11.data.model.DaySchedule
 import com.example.projekmobile_kel11.data.model.TimeSlot
 import com.example.projekmobile_kel11.databinding.FragmentDokterScheduleBinding
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -50,22 +49,20 @@ class DokterScheduleFragment : Fragment() {
             .collection("doctor_schedules")
             .document(doctorId)
             .collection("schedules")
-            .get()
-            .addOnSuccessListener { snapshot ->
+            .addSnapshotListener { snapshot, _ ->
+                if (snapshot == null) return@addSnapshotListener
 
                 val slots = snapshot.documents.mapNotNull { doc ->
                     doc.toObject(TimeSlot::class.java)?.apply {
                         id = doc.id
+                        doctorId = this@DokterScheduleFragment.doctorId
                     }
                 }
 
-                // 🔥 GROUP BY DAY / DATE
                 val grouped = slots.groupBy { it.date }
-
                 setupRecycler(grouped)
             }
     }
-
 
 
     private fun setupRecycler(data: Map<String, List<TimeSlot>>) {
@@ -85,7 +82,11 @@ class DokterScheduleFragment : Fragment() {
             .collection("schedules")
             .document(slot.id)
             .update("status", "booked")
+            .addOnSuccessListener {
+                loadWeeklySchedule()
+            }
     }
+
 
 
     private fun deleteSlot(slot: TimeSlot) {
@@ -127,14 +128,6 @@ class DokterScheduleFragment : Fragment() {
                 )
             )
     }
-    private fun approveBooking(slot: TimeSlot) {
-        FirebaseFirestore.getInstance()
-            .collection("doctor_schedules")
-            .document(slot.doctorId)
-            .collection("schedules")
-            .document(slot.id)
-            .update("status", "booked")
-    }
     private fun rejectBooking(slot: TimeSlot) {
         FirebaseFirestore.getInstance()
             .collection("doctor_schedules")
@@ -148,8 +141,4 @@ class DokterScheduleFragment : Fragment() {
                 )
             )
     }
-
-
-
-
 }
