@@ -6,7 +6,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projekmobile_kel11.R
-import com.example.projekmobile_kel11.data.model.DaySchedule
 import com.example.projekmobile_kel11.data.model.TimeSlot
 import com.example.projekmobile_kel11.databinding.ItemScheduleDayBinding
 import com.example.projekmobile_kel11.utils.ReminderScheduler.schedule
