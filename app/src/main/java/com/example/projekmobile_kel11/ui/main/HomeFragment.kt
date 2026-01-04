@@ -1,13 +1,12 @@
 package com.example.projekmobile_kel11.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.databinding.FragmentHomeBinding
-import com.example.projekmobile_kel11.ui.prediction.PredictionFormActivity
+import com.example.projekmobile_kel11.ui.prediction.PredictionFormFragment
 
 class HomeFragment : Fragment() {
 
@@ -27,7 +26,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnMulaiPrediksi.setOnClickListener {
-            startActivity(Intent(requireContext(), PredictionFormActivity::class.java))
+            parentFragmentManager.beginTransaction()
+                .replace(
+                    com.example.projekmobile_kel11.R.id.fragment_container,
+                    PredictionFormFragment()
+                )
+                .addToBackStack(null)
+                .commit()
         }
     }
 

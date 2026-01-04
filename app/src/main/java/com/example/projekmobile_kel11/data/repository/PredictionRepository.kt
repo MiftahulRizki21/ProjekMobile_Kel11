@@ -1,33 +1,31 @@
-import com.example.projekmobile_kel11.data.model.PredictionInput
+package com.example.projekmobile_kel11.data.repository
+
 import com.example.projekmobile_kel11.data.model.PredictionResult
-import com.example.projekmobile_kel11.utils.MLHelper
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
-class PredictionRepository(private val mlHelper: MLHelper) {
+class PredictionRepository {
 
-    fun predictCancerRisk(input: PredictionInput): PredictionResult {
+    private val db = FirebaseFirestore.getInstance()
 
-        val (predClass, probability) = mlHelper.predict(input)
-
-        val riskLevel = when (predClass) {
-            0 -> "Rendah"
-            1 -> "Tinggi"
-            else -> "Tidak Diketahui"
-        }
-
-        return PredictionResult(
-            predictionId = System.currentTimeMillis().toString(),
-            tanggalPrediksi = getCurrentDate(),
-            riskLevel = riskLevel,
-            riskScore = probability,
-            input = input
-        )
+    fun getUserPredictions(
+        userId: String,
+        onSuccess: (List<PredictionResult>) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        db.collection("predictions")
+            .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener {
+                onSuccess(it.toObjects(PredictionResult::class.java))
+            }
+            .addOnFailureListener {
+                onError(it)
+            }
     }
 
-    private fun getCurrentDate(): String {
-        val sdf = java.text.SimpleDateFormat(
-            "dd MMM yyyy",
-            java.util.Locale("id", "ID")
-        )
-        return sdf.format(java.util.Date())
+    fun savePrediction(result: PredictionResult) {
+        db.collection("predictions").add(result)
     }
 }
