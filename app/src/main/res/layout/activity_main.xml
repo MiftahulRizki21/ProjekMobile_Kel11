@@ -17,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        android:background="@android:color/white"
+        app:itemIconTint="@color/bottom_nav_icon_selector"
+        app:itemTextColor="@color/bottom_nav_icon_selector"
         app:menu="@menu/user_bottom_nav"/>
 
 

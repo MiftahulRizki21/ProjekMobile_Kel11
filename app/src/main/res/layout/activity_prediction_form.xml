@@ -1,529 +1,857 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_gradient"
-    android:padding="16dp">
+    android:background="#F5F7FB"
+    android:fillViewport="true"
+    android:paddingBottom="96dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="24dp">
+        android:paddingBottom="32dp">
 
-        <androidx.cardview.widget.CardView
+        <!-- Header Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#1E88E5"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Formulir Pemeriksaan Risiko"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Jawab semua pertanyaan dengan jujur untuk hasil yang akurat"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:alpha="0.9" />
+
+        </LinearLayout>
+
+        <!-- Main Form Container -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="6dp"
-            android:padding="20dp"
-            android:backgroundTint="#FFFFFFFF"
-            app:cardCornerRadius="30dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@android:color/white">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jawab Pertanyaan Berikut:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+                <!-- ========== SECTION 1: INFORMASI DASAR ========== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INFORMASI DASAR"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:letterSpacing="0.05" />
 
-        <!-- Usia -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1. Berapa usia Anda?"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#E0E0E0" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukkan usia"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <!-- Question 1: Age -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1. Berapa usia Anda?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- Gender -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2. Jenis Kelamin?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    app:boxStrokeColor="#1E88E5"
+                    app:hintTextColor="#1E88E5">
 
-        <RadioGroup
-            android:id="@+id/rgGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/rbFemale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Perempuan" />
-            <RadioButton
-                android:id="@+id/rbMale"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Laki-laki" />
-        </RadioGroup>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Masukkan usia (contoh: 35)"
+                        android:inputType="number"
+                        android:padding="16dp"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Tobacco Use -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3. Apakah Anda menggunakan tembakau/merokok?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <!-- Question 2: Gender -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. Jenis Kelamin?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <RadioGroup
-            android:id="@+id/rgTobacco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <RadioGroup
+                    android:id="@+id/rgGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
 
-        <!-- Alcohol Consumption -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4. Apakah Anda mengonsumsi alkohol?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:id="@+id/rbFemale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Perempuan"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
-        <RadioGroup
-            android:id="@+id/rgAlcohol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rbMale"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Laki-laki"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
 
-        <!-- HPV Infection -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5. Apakah Anda terinfeksi HPV?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <!-- Section Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="#EEEEEE" />
 
-        <RadioGroup
-            android:id="@+id/rgHpv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- ========== SECTION 2: FAKTOR RISIKO ========== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FAKTOR RISIKO"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:letterSpacing="0.05" />
 
-        <!-- Betel Quid Use -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6. Apakah Anda mengonsumsi sirih/pinang?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#E0E0E0" />
 
-        <RadioGroup
-            android:id="@+id/rgBetelQuid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- Question 3: Tobacco -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. Apakah Anda menggunakan tembakau/merokok?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- Chronic Sun Exposure -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7. Apakah Anda sering terpapar sinar matahari?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <RadioGroup
+                    android:id="@+id/rgTobacco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rgSunExposure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
-        <!-- Poor Oral Hygiene -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8. Apakah kebersihan mulut Anda buruk?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/rgOralHygiene"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- Question 4: Alcohol -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4. Apakah Anda mengonsumsi alkohol?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- Diet -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9. Apakah Anda rutin mengonsumsi buah dan sayur?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <RadioGroup
+                    android:id="@+id/rgAlcohol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rgDiet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
-        <!-- Family History -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10. Apakah ada riwayat kanker dalam keluarga?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/rgFamilyHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- Question 5: HPV -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5. Apakah Anda terinfeksi HPV?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- Compromised Immune System -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="11. Apakah sistem kekebalan tubuh Anda lemah?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <RadioGroup
+                    android:id="@+id/rgHpv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rgImmuneSystem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
-        <!-- Oral Lesions -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12. Apakah ada lesi/luka di mulut Anda?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/rgOralLesions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- Question 6: Betel Quid -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6. Apakah Anda mengonsumsi sirih/pinang?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- Unexplained Bleeding -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="13. Apakah ada pendarahan tanpa sebab jelas?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <RadioGroup
+                    android:id="@+id/rgBetelQuid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rgBleeding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
-        <!-- Difficulty Swallowing -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="14. Apakah Anda kesulitan menelan?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/rgSwallowing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                <!-- Question 7: Sun Exposure -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7. Apakah Anda sering terpapar sinar matahari?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
-        <!-- White or Red Patches -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15. Apakah ada bercak putih/merah di mulut?"
-            android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+                <RadioGroup
+                    android:id="@+id/rgSunExposure"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rgPatches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tidak" />
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ya" />
-        </RadioGroup>
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 8: Oral Hygiene -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8. Apakah kebersihan mulut Anda buruk?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgOralHygiene"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 9: Diet -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9. Apakah Anda rutin mengonsumsi buah dan sayur?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgDiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 10: Family History -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10. Apakah ada riwayat kanker dalam keluarga?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgFamilyHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 11: Immune System -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11. Apakah sistem kekebalan tubuh Anda lemah?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgImmuneSystem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Section Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="#EEEEEE" />
+
+                <!-- ========== SECTION 3: GEJALA KLINIS ========== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GEJALA KLINIS"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:letterSpacing="0.05" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#E0E0E0" />
+
+                <!-- Question 12: Oral Lesions -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12. Apakah ada lesi/luka di mulut Anda?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgOralLesions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 13: Bleeding -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="13. Apakah ada pendarahan tanpa sebab jelas?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgBleeding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 14: Swallowing -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14. Apakah Anda kesulitan menelan?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgSwallowing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Question 15: Patches -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15. Apakah ada bercak putih/merah di mulut?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgPatches"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="24dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tidak"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+
+                    <RadioButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ya"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
+                </RadioGroup>
+
+                <!-- Section Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="#EEEEEE" />
+
+                <!-- ========== SECTION 4: INFORMASI MEDIS TAMBAHAN ========== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INFORMASI MEDIS TAMBAHAN"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E88E5"
+                    android:letterSpacing="0.05" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="#E0E0E0" />
+
+                <!-- Question 16: Tumor Size -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="16. Ukuran Tumor (cm)"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    app:boxStrokeColor="#1E88E5"
+                    app:hintTextColor="#1E88E5">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etTumorSize"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Contoh: 2.5"
-                        android:inputType="numberDecimal"/>
+                        android:inputType="numberDecimal"
+                        android:padding="16dp"
+                        android:textSize="15sp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Question 17: Cancer Stage -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="17. Stadium Kanker"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
+                    android:text="17. Stadium Kanker (Opsional)"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
 
                 <RadioGroup
                     android:id="@+id/rgCancerStage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp">
 
                     <RadioButton
                         android:id="@+id/rbStage1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stage I"/>
+                        android:text="Stage I"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
 
                     <RadioButton
                         android:id="@+id/rbStage2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stage II"/>
+                        android:text="Stage II"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
 
                     <RadioButton
                         android:id="@+id/rbStage3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stage III"/>
+                        android:text="Stage III"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
 
                     <RadioButton
                         android:id="@+id/rbStage4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stage IV"/>
+                        android:text="Stage IV"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
                 </RadioGroup>
+
+                <!-- Question 18: Treatment (Optional) -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18. Jenis Pengobatan (Optional)"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
+                    android:text="18. Jenis Pengobatan (Opsional)"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Lewati jika belum ada"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:fontFamily="sans-serif-light" />
 
                 <RadioGroup
                     android:id="@+id/rgTreatment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="20dp">
 
                     <RadioButton
                         android:id="@+id/rbSurgery"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Surgery"/>
+                        android:text="Surgery"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
 
                     <RadioButton
                         android:id="@+id/rbRadiation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Radiation"/>
+                        android:text="Radiation"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
 
                     <RadioButton
                         android:id="@+id/rbChemotherapy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chemotherapy"/>
+                        android:text="Chemotherapy"
+                        android:textSize="14sp"
+                        android:padding="8dp" />
                 </RadioGroup>
+
+                <!-- Question 19: Early Diagnosis (Optional) -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19. Diagnosis Dini? (Optional)"
-                    android:textSize="16sp"
-                    android:layout_marginTop="16dp"/>
+                    android:text="19. Early Diagnosis?"
+                    android:textSize="15sp"
+                    android:textColor="#212121"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Select if an early diagnosis has been made"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:fontFamily="sans-serif-light" />
 
                 <RadioGroup
                     android:id="@+id/rgEarlyDiagnosis"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="32dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rbEarlyYes"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Ya"/>
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
 
                     <RadioButton
                         android:id="@+id/rbEarlyNo"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Tidak"/>
+                        android:layout_weight="1"
+                        android:text="No"
+                        android:textSize="14sp"
+                        android:padding="12dp" />
                 </RadioGroup>
 
-                <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Submit Prediksi"
-            android:textSize="16sp"
-            android:layout_marginTop="24dp" />
-            </LinearLayout>
+                <!-- Info Disclaimer -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This assessment is for early risk screening only and does not replace a professional medical diagnosis."
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="12dp"
+                    android:background="#F5F7FB"
+                    android:layout_marginBottom="24dp" />
 
-        </androidx.cardview.widget.CardView>
+                <!-- Submit Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Run Risk Prediction"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#1E88E5"
+                    android:textColor="@android:color/white"
+                    app:cornerRadius="28dp"
+                    app:elevation="6dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>
