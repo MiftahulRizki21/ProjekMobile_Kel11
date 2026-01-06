@@ -23,8 +23,9 @@ class DoctorListUserAdapter(
             binding.tvDoctorName.text = d.nama
             binding.tvDoctorSpecialization.text = d.spesialisasi
 
-            binding.btnEdit.visibility = View.GONE
-            binding.btnDelete.visibility = View.GONE
+            // Sembunyikan container card edit dan delete
+            binding.cardEditContainer.visibility = View.GONE
+            binding.cardDeleteContainer.visibility = View.GONE
 
             binding.root.setOnClickListener {
                 Log.d("CHAT_DEBUG", "Doctor clicked: ${d.userId}")
@@ -49,6 +50,3 @@ class DoctorListUserAdapter(
 
     override fun getItemCount() = list.size
 }
-
-
-

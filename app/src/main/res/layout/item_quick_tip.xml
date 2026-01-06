@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@android:color/white">
 
-    <TextView
-        android:id="@+id/tvTipNumber"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:gravity="center"
-        android:text="1"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginEnd="12dp"
-        app:backgroundTint="@color/blue_primary"/>
-
-    <TextView
-        android:id="@+id/tvTipText"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Sikat gigi minimal 2 kali sehari"
-        android:textColor="@color/text_primary"
-        android:textSize="14sp"
-        tools:text="Sikat gigi minimal 2 kali sehari"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
-</LinearLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#E3F2FD">
+
+            <TextView
+                android:id="@+id/tvTipNumber"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvTipText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:text="Sikat gigi minimal 2 kali sehari"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:lineSpacingExtra="2dp"
+            tools:text="Sikat gigi minimal 2 kali sehari"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
