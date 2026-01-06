@@ -1,0 +1,73 @@
+{
+    "articles": [
+        {
+            "id": 1,
+            "title": "Kanker Mulut: Penyebab dan Pencegahan",
+            "category": "Kanker Mulut",
+            "read_time": 5,
+            "image_res": "ic_article_oral_cancer",
+            "content": "<h2>Kanker Mulut: Penyebab dan Pencegahan</h2><h3>Apa itu Kanker Mulut?</h3>Kanker mulut adalah pertumbuhan sel abnormal yang tidak terkendali pada jaringan di dalam mulut. Kanker ini bisa muncul di bibir, lidah, pipi bagian dalam, gusi, langit-langit mulut, atau dasar mulut.<h3>Faktor Risiko Utama:</h3><b>1. Merokok dan Tembakau</b><br>• Rokok sigaret, cerutu, pipa<br>• Tembakau kunyah<br>• Sirih pinang<br><b>2. Konsumsi Alkohol</b><br>• Risiko meningkat 6x jika merokok dan minum alkohol<br>• Alkohol mengiritasi sel mulut<br><b>3. Infeksi HPV</b><br>• Human Papillomavirus tipe 16 dan 18<br>• Menular melalui kontak seksual oral<br><b>4. Paparan Sinar Matahari</b><br>• Kanker bibir sering terjadi<br>• Gunakan lip balm dengan SPF<h3>Gejala Awal:</h3>• Luka di mulut tidak sembuh dalam 2 minggu<br>• Bercak putih/merah di mulut<br>• Benjolan atau penebalan di mulut<br>• Sulit menelan atau mengunyah<br>• Perdarahan tanpa sebab jelas<br>• Sakit telinga tanpa infeksi<h3>Pencegahan:</h3>1. Hentikan merokok dan konsumsi tembakau<br>2. Batasi konsumsi alkohol<br>3. Lindungi bibir dari sinar matahari<br>4. Praktik seks aman<br>5. Periksa mulut sendiri setiap bulan<br>6. Kunjungi dokter gigi 6 bulan sekali<h3>Deteksi Dini:</h3>• Pemeriksaan mulut sendiri bulanan<br>• Skrining kanker mulut oleh dokter<br>• Biopsi jika ada kelainan<br><br><b>Ingat:</b> Deteksi dini meningkatkan peluang kesembuhan hingga 90%!"
+        },
+        {
+            "id": 2,
+            "title": "Cara Merawat Gigi dan Mulut yang Benar",
+            "category": "Perawatan Harian",
+            "read_time": 8,
+            "image_res": "ic_article_oral_hygiene",
+            "content": "<h2>Cara Merawat Gigi dan Mulut yang Benar</h2><h3>1. Menyikat Gigi yang Benar</h3>• Gunakan sikat gigi berbulu lembut<br>• Sikat 2 kali sehari (pagi dan malam)<br>• Durasi minimal 2 menit<br>• Teknik Bass: sikat dengan sudut 45 derajat<br>• Jangan lupa lidah dan pipi dalam<h3>2. Flossing (Benang Gigi)</h3>• Gunakan setiap hari sebelum sikat gigi<br>• Panjang 45 cm, lilit di jari tengah<br>• Gerakkan naik turun lembut<br>• Bersihkan semua sisi gigi<h3>3. Mouthwash (Obat Kumur)</h3>• Pilih bebas alkohol<br>• Gunakan setelah sikat gigi<br>• Kumur 30 detik, jangan ditelan<br>• Tidak untuk anak di bawah 6 tahun<h3>4. Pembersihan Profesional</h3>• Scaling 6 bulan sekali<br>• Fluoride treatment<br>• Pemeriksaan gigi rutin<h3>5. Sikat Gigi yang Tepat</h3>• Ganti setiap 3-4 bulan<br>• Elektrik lebih efektif<br>• Simpan dalam posisi berdiri<br>• Jangan berbagi sikat gigi"
+        },
+        {
+            "id": 3,
+            "title": "Makanan untuk Kesehatan Mulut",
+            "category": "Nutrisi",
+            "read_time": 6,
+            "image_res": "ic_article_diet",
+            "content": "<h2>Makanan untuk Kesehatan Mulut</h2><h3>Makanan yang Baik:</h3><b>1. Susu dan Produk Olahan</b><br>• Kaya kalsium untuk tulang dan gigi<br>• Keju meningkatkan pH mulut<br>• Yogurt mengandung probiotik<br><b>2. Buah dan Sayur Kaya Serat</b><br>• Apel: 'sikat gigi alami'<br>• Wortel: meningkatkan air liur<br>• Seledri: membersihkan gigi<br>• Brokoli: membentuk lapisan pelindung<br><b>3. Makanan Kaya Vitamin C</b><br>• Jeruk, stroberi, kiwi<br>• Mencegah gusi berdarah<br>• Memperkuat jaringan gusi<br><b>4. Teh Hijau</b><br>• Mengandung polifenol<br>• Mengurangi plak<br>• Menghambat bakteri<h3>Makanan yang Harus Dibatasi:</h3>• Permen lengket<br>• Minuman bersoda<br>• Roti putih<br>• Keripik kentang<br>• Buah kering berlebihan<h3>Tips Makan Sehat:</h3>1. Minum air setelah makan<br>2. Batasi makanan asam<br>3. Kunyah permen karet xylitol<br>4. Hindari ngemil terus menerus<br>5. Makan keju setelah makanan manis"
+        },
+        {
+            "id": 4,
+            "title": "Gejala Kanker Mulut Stadium Awal",
+            "category": "Gejala",
+            "read_time": 4,
+            "image_res": "ic_symptoms",
+            "content": "<h2>Gejala Kanker Mulut Stadium Awal</h2><h3>Tanda-tanda yang Harus Diwaspadai:</h3><b>1. Luka yang Tidak Sembuh</b><br>• Luka/ulkus di mulut lebih dari 2 minggu<br>• Tidak ada riwayat trauma<br>• Tidak nyeri pada stadium awal<h3>2. Perubahan Warna Mukosa</b><br>• Bercak putih (leukoplakia)<br>• Bercak merah (eritroplakia)<br>• Kombinasi putih-merah<h3>3. Benjolan atau Penebalan</b><br>• Benjolan di bibir, gusi, atau mulut<br>• Penebalan pipi bagian dalam<br>• Pembengkakan tanpa sebab jelas<h3>4. Gejala Lainnya:</b><br>• Kesulitan mengunyah atau menelan<br>• Perasaan ada yang mengganjal di tenggorokan<br>• Perdarahan mulut tanpa sebab<br>• Mati rasa di mulut atau bibir<br>• Perubahan suara<br>• Penurunan berat badan tanpa sebab<h3>Perbedaan dengan Sariawan Biasa:</h3><b>Sariawan Biasa:</b><br>• Nyeri sejak awal<br>• Sembuh dalam 7-10 hari<br>• Tidak ada benjolan<br><br><b>Kanker Mulut:</b><br>• Tidak nyeri pada awal<br>• Tidak sembuh >2 minggu<br>• Disertai benjolan"
+        },
+        {
+            "id": 5,
+            "title": "Pencegahan Kanker Mulut Sejak Dini",
+            "category": "Pencegahan",
+            "read_time": 7,
+            "image_res": "ic_shield",
+            "content": "<h2>Pencegahan Kanker Mulut Sejak Dini</h2><h3>1. Hindari Faktor Risiko</h3>• Berhenti merokok dan tembakau<br>• Batasi konsumsi alkohol<br>• Hindari sinar matahari berlebih<br>• Praktik seks aman<h3>2. Perawatan Mulut Rutin</h3>• Sikat gigi 2x sehari<br>• Flossing setiap hari<br>• Periksa gigi 6 bulan sekali<br>• Pembersihan profesional rutin<h3>3. Pola Makan Sehat</h3>• Konsumsi buah dan sayur<br>• Batasi makanan manis<br>• Minum air putih cukup<br>• Konsumsi makanan kaya antioksidan<h3>4. Pemeriksaan Mandiri</h3><b>Langkah-langkah:</b><br>1. Cuci tangan bersih<br>2. Berdiri di depan cermin<br>3. Periksa bibir luar dan dalam<br>4. Periksa gusi atas dan bawah<br>5. Periksa lidah dan dasar mulut<br>6. Periksa pipi bagian dalam<br>7. Periksa langit-langit mulut<h3>5. Vaksinasi HPV</h3>• Direkomendasikan untuk usia 9-26 tahun<br>• Mencegah infeksi HPV penyebab kanker<br>• Konsultasi dengan dokter"
+        }
+    ],
+    "quick_tips": [
+        "Sikat gigi minimal 2 kali sehari",
+        "Gunakan benang gigi setiap hari",
+        "Kurangi konsumsi gula berlebih",
+        "Periksa gigi 6 bulan sekali",
+        "Hindari merokok dan alkohol",
+        "Minum air putih yang cukup",
+        "Makan makanan kaya kalsium",
+        "Gunakan sikat gigi lembut",
+        "Ganti sikat gigi setiap 3 bulan",
+        "Berkumur setelah makan"
+    ],
+    "video_resources": [
+        {
+            "title": "Teknik Sikat Gigi yang Benar",
+            "duration": "4:32",
+            "thumbnail": "img_video_placeholder"
+        },
+        {
+            "title": "Cara Flossing yang Tepat",
+            "duration": "3:15",
+            "thumbnail": "img_video_placeholder"
+        },
+        {
+            "title": "Pemeriksaan Mulut Mandiri",
+            "duration": "5:20",
+            "thumbnail": "img_video_placeholder"
+        }
+    ]
+}

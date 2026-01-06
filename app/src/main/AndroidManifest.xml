@@ -67,6 +67,15 @@
         <activity
             android:name=".ui.consultation.ChatActivity"
             android:exported="false" />
+        <!-- Article Detail -->
+        <activity
+            android:name=".ui.education.detail.ArticleDetailActivity"
+            android:exported="false" />
+
+        <!-- Category -->
+        <activity
+            android:name=".ui.CategoryActivity"
+            android:exported="false" />
 
         <service
             android:name=".MyFirebaseMessagingService"
