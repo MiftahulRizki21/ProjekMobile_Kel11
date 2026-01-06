@@ -30,6 +30,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentChatDoctor"
+        android:name="com.example.projekmobile_kel11.fragments.dokter.FragmentChatDoctor"
+        android:label="Chat Dokter">
+
+        <argument
+            android:name="consultationId"
+            app:argType="string" />
+    </fragment>
+
+
+    <fragment
         android:id="@+id/addScheduleFragment"
         android:name="com.example.projekmobile_kel11.fragments.dokter.AddScheduleFragment"
         android:label="Tambah Jadwal"/>

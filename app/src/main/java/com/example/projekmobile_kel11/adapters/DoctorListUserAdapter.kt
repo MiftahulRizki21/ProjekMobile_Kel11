@@ -1,5 +1,6 @@
 package com.example.projekmobile_kel11.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,11 @@ class DoctorListUserAdapter(
             binding.tvDoctorName.text = d.nama
             binding.tvDoctorSpecialization.text = d.spesialisasi
 
-            // 🔥 SEMBUNYIKAN TOMBOL ADMIN
             binding.btnEdit.visibility = View.GONE
             binding.btnDelete.visibility = View.GONE
 
             binding.root.setOnClickListener {
+                Log.d("CHAT_DEBUG", "Doctor clicked: ${d.userId}")
                 onClick(d)
             }
         }
@@ -35,14 +36,19 @@ class DoctorListUserAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return VH(
             ItemDokterBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                LayoutInflater.from(parent.context),
+                parent,
+                false
             )
         )
     }
 
-    override fun getItemCount() = list.size
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(list[position])
     }
+
+    override fun getItemCount() = list.size
 }
+
+
 

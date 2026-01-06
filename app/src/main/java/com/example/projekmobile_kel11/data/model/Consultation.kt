@@ -5,7 +5,8 @@ data class Consultation(
     var userId: String = "",
     var doctorId: String = "",
     var lastMessage: String = "",
-    var lastTimestamp: Long = 0L
+    var lastTimestamp: Long = 0L,
+    var unreadCountDoctor: Int = 0,
 )
 
 

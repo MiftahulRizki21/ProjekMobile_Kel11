@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.DoctorChatListAdapter
@@ -36,12 +38,17 @@ class FragmentDoctorChatList : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         adapter = DoctorChatListAdapter(list) { consultation ->
-            val fragment = FragmentChatDoctor.newInstance(consultation.consultationId)
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment)
-                .addToBackStack(null)
-                .commit()
+
+            val bundle = bundleOf(
+                "consultationId" to consultation.consultationId
+            )
+
+            findNavController().navigate(
+                R.id.fragmentChatDoctor,
+                bundle
+            )
         }
 
         binding.rvChatList.layoutManager = LinearLayoutManager(requireContext())
@@ -49,6 +56,7 @@ class FragmentDoctorChatList : Fragment() {
 
         loadChats()
     }
+
 
     private fun loadChats() {
         if (doctorId.isEmpty()) return

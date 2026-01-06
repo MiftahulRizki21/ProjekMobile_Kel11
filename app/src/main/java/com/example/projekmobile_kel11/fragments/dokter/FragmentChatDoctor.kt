@@ -1,11 +1,13 @@
 package com.example.projekmobile_kel11.fragments.dokter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.adapters.ChatAdapter
 import com.example.projekmobile_kel11.data.model.ChatMessage
@@ -28,6 +30,7 @@ class FragmentChatDoctor : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         consultationId = arguments?.getString(ARG_CONSULTATION_ID) ?: ""
+        Log.d("CHAT_DEBUG", "consultationId = $consultationId")
     }
 
     override fun onCreateView(
@@ -62,8 +65,11 @@ class FragmentChatDoctor : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.btnBack.setOnClickListener { requireActivity().finish() }
+        binding.btnBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
+
 
     // 🔥 Load nama lawan bicara sesuai user/dokter
     private fun loadChatTitle() {
@@ -128,6 +134,7 @@ class FragmentChatDoctor : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Gagal mengirim pesan", Toast.LENGTH_SHORT).show()
             }
+
     }
 
     private fun listenMessages() {
@@ -151,6 +158,15 @@ class FragmentChatDoctor : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        // reset unread untuk dokter
+        FirebaseDatabase.getInstance()
+            .getReference("consultations")
+            .child(consultationId)
+            .child("unreadCountDoctor")
+            .setValue(0)
+
+        // update status pesan
         FirebaseDatabase.getInstance()
             .getReference("chats")
             .child(consultationId)
@@ -158,12 +174,14 @@ class FragmentChatDoctor : Fragment() {
             .equalTo("delivered")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach { it.ref.child("status").setValue("read") }
+                    snapshot.children.forEach {
+                        it.ref.child("status").setValue("read")
+                    }
                 }
-
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
+
 
     private fun updateLastMessage(message: String) {
         val updateMap = mapOf(
@@ -178,10 +196,14 @@ class FragmentChatDoctor : Fragment() {
 
     companion object {
         private const val ARG_CONSULTATION_ID = "consultationId"
-        fun newInstance(consultationId: String) =
-            FragmentChatDoctor().apply {
-                arguments = Bundle().apply { putString(ARG_CONSULTATION_ID, consultationId) }
+
+        fun newInstance(consultationId: String): FragmentChatDoctor {
+            return FragmentChatDoctor().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_CONSULTATION_ID, consultationId)
+                }
             }
+        }
     }
 
     override fun onDestroyView() {

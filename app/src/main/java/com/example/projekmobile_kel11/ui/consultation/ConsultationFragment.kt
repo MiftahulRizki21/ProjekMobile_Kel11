@@ -1,6 +1,7 @@
 package com.example.projekmobile_kel11.ui.consultation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,7 @@ class ConsultationFragment : Fragment() {
     // 🔹 open chat di fragment container MainActivity
     private fun openChat(consultationId: String) {
         val fragment = FragmentChatDoctor.newInstance(consultationId)
+        Log.d("CHAT_DEBUG", "openChat called: $consultationId")
 
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
