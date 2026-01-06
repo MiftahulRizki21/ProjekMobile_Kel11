@@ -8,82 +8,47 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.data.model.Doctor
+import com.example.projekmobile_kel11.data.model.User
 import com.example.projekmobile_kel11.databinding.FragmentDashboardDokterBinding
 import com.example.projekmobile_kel11.ui.auth.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class DokterDashboardFragment : Fragment() {
+class DokterDashboardFragment : Fragment(R.layout.fragment_dashboard_dokter) {
 
     private var _binding: FragmentDashboardDokterBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var doctorId: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDashboardDokterBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentDashboardDokterBinding.bind(view)
+
         doctorId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        binding.cardLogout.setOnClickListener {
-            showLogoutDialog()
-        }
 
         loadDoctorProfile()
         loadStatistics()
         setupAvailability()
-    }
-    private fun showLogoutDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Logout")
-            .setMessage("Apakah Anda yakin ingin keluar?")
-            .setPositiveButton("Ya") { _, _ ->
-                FirebaseDatabase.getInstance()
-                    .getReference("doctors")
-                    .child(doctorId)
-                    .child("available")
-                    .setValue(false)
 
-                FirebaseAuth.getInstance().signOut()
-
-                val intent = Intent(requireContext(), LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
-            .setNegativeButton("Batal", null)
-            .show()
+        binding.cardLogout.setOnClickListener {
+            showLogoutDialog()
+        }
     }
 
     // ===================== PROFIL DOKTER =====================
     private fun loadDoctorProfile() {
         FirebaseDatabase.getInstance()
-            .getReference("doctors")
+            .getReference("users")
             .child(doctorId)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.exists()) return@addOnSuccessListener
 
-                val doctor = snapshot.getValue(Doctor::class.java) ?: return@addOnSuccessListener
+                val user = snapshot.getValue(Doctor::class.java) ?: return@addOnSuccessListener
 
-                binding.tvDoctorName.text = doctor.nama
-                binding.tvDoctorSpecialist.text = doctor.spesialisasi
-
-                Glide.with(requireContext())
-                    .load(doctor.fotoUrl)
-                    .placeholder(R.drawable.ic_doctor_default)
-                    .error(R.drawable.ic_doctor_default)
-                    .into(binding.imgDoctor)
+                binding.tvDoctorName.text = user.nama
+                binding.tvDoctorSpecialist.text = user.spesialisasi
             }
     }
 
@@ -128,27 +93,27 @@ class DokterDashboardFragment : Fragment() {
         }
     }
 
-    // ===================== MENU LOGOUT =====================
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_doctor_dashboard, menu)
-    }
+    // ===================== LOGOUT =====================
+    private fun showLogoutDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Logout")
+            .setMessage("Apakah Anda yakin ingin keluar?")
+            .setPositiveButton("Ya") { _, _ ->
+                FirebaseDatabase.getInstance()
+                    .getReference("doctors")
+                    .child(doctorId)
+                    .child("available")
+                    .setValue(false)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_logout -> {
-                logout()
-                true
+                FirebaseAuth.getInstance().signOut()
+
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun logout() {
-        FirebaseAuth.getInstance().signOut()
-
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+            .setNegativeButton("Batal", null)
+            .show()
     }
 
     override fun onDestroyView() {

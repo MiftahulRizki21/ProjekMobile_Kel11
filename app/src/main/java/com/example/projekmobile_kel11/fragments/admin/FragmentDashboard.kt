@@ -34,18 +34,29 @@ class FragmentDashboard : Fragment(R.layout.fragment_dashboard_admin) {
     }
 
     private fun loadStatistics() {
-        db.child("users").get().addOnSuccessListener {
-            binding.tvUserCount.text = it.childrenCount.toString()
+
+        // TOTAL USER (PASlEN)
+        db.child("users").get().addOnSuccessListener { snapshot ->
+            var userCount = 0
+            var doctorCount = 0
+
+            for (data in snapshot.children) {
+                val role = data.child("role").getValue(String::class.java)
+
+                if (role == "user") userCount++
+                if (role == "doctor") doctorCount++
+            }
+
+            binding.tvUserCount.text = userCount.toString()
+            binding.tvDoctorCount.text = doctorCount.toString()
         }
 
-        db.child("doctors").get().addOnSuccessListener {
-            binding.tvDoctorCount.text = it.childrenCount.toString()
-        }
-
+        // TOTAL KONSULTASI
         db.child("consultations").get().addOnSuccessListener {
             binding.tvConsultationCount.text = it.childrenCount.toString()
         }
     }
+
 
     private fun setupAction() {
         binding.cardKelolaDokter.setOnClickListener {

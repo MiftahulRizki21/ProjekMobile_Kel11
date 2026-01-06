@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.adapters.ChatAdapter
 import com.example.projekmobile_kel11.data.model.ChatMessage
 import com.example.projekmobile_kel11.databinding.FragmentChatDoctorBinding
-import com.example.projekmobile_kel11.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.example.projekmobile_kel11.R
 
 class FragmentChatDoctor : Fragment() {
 
@@ -160,14 +159,18 @@ class FragmentChatDoctor : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        // reset unread untuk dokter
+        // 🔥 Sembunyikan toolbar & bottom nav Activity Dokter
+        requireActivity().findViewById<View>(R.id.toolbar)?.visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.bottomNav)?.visibility = View.GONE
+
+        // 🔥 Reset unread untuk dokter
         FirebaseDatabase.getInstance()
             .getReference("consultations")
             .child(consultationId)
             .child("unreadCountDoctor")
             .setValue(0)
 
-        // update status pesan
+        // 🔥 Update status pesan: delivered -> read
         FirebaseDatabase.getInstance()
             .getReference("chats")
             .child(consultationId)
@@ -182,6 +185,16 @@ class FragmentChatDoctor : Fragment() {
                 override fun onCancelled(error: DatabaseError) {}
             })
     }
+
+
+    override fun onPause() {
+        super.onPause()
+
+        // 🔥 Munculkan lagi toolbar & bottom nav saat keluar chat
+        requireActivity().findViewById<View>(R.id.toolbar)?.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
+    }
+
 
 
     private fun updateLastMessage(message: String) {
@@ -206,11 +219,9 @@ class FragmentChatDoctor : Fragment() {
             }
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (activity as? MainActivity)?.showBottomNav()
-
     }
+
 }
