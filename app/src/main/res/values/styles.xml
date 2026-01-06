@@ -4,13 +4,17 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-    <style name="BottomNavTextActive">
+    <!-- Bottom Navigation Text Styles -->
+    <style name="BottomNavTextActive" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="BottomNavTextInactive">
+    <style name="BottomNavTextInactive" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
+
 
 </resources>

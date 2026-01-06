@@ -1,23 +1,19 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
 
-    <!-- Shadow -->
-    <item>
-        <inset
-            android:insetTop="2dp"
-            android:insetBottom="6dp">
-            <shape>
-                <solid android:color="#22000000"/>
-                <corners android:radius="28dp"/>
-            </shape>
-        </inset>
-    </item>
+    <solid android:color="@android:color/white"/>
 
-    <!-- Background -->
-    <item>
-        <shape>
-            <solid android:color="@color/bg_card"/>
-            <corners android:radius="28dp"/>
-        </shape>
-    </item>
+    <!-- Rounded Top Corners Only -->
+    <corners
+        android:topLeftRadius="24dp"
+        android:topRightRadius="24dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"/>
 
-</layer-list>
+    <!-- Subtle Border for Definition -->
+    <stroke
+        android:width="0.5dp"
+        android:color="#E0E0E0"/>
+
+</shape>
