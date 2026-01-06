@@ -25,7 +25,7 @@ class UserAdapter(
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
         holder.binding.apply {
-            tvUserName.text = user.nama
+            tvUserName.text = user.name
             tvUserEmail.text = user.email
 
             Glide.with(holder.itemView.context)

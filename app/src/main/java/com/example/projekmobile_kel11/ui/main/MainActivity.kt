@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.ActivityMainBinding
+import com.example.projekmobile_kel11.fragments.user.UserScheduleFragment
 import com.example.projekmobile_kel11.ui.consultation.ConsultationFragment
+import com.example.projekmobile_kel11.ui.consultation.ScheduleActivity
 import com.example.projekmobile_kel11.ui.education.EducationFragment
 import com.example.projekmobile_kel11.ui.prediction.PredictionFormFragment
 import com.example.projekmobile_kel11.ui.profile.ProfileFragment
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_consultation -> loadFragment(ConsultationFragment())
                 R.id.nav_profile -> loadFragment(ProfileFragment())
                 R.id.nav_prediction -> loadFragment(PredictionFormFragment())
+                R.id.nav_schedule -> loadFragment(UserScheduleFragment())
             }
             true
         }

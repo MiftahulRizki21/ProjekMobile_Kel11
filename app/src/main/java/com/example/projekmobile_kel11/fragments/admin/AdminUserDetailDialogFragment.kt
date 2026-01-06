@@ -1,17 +1,18 @@
-package com.example.projekmobile_kel11.fragments.dokter
+package com.example.projekmobile_kel11.fragments.admin
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.example.projekmobile_kel11.data.model.User
-import com.example.projekmobile_kel11.databinding.FragmentPatientDetail2Binding
+import com.example.projekmobile_kel11.databinding.FragmentAdminUserDetailDialogBinding
 import com.google.firebase.database.*
 
-class PatientDetailDialogFragment : DialogFragment() {
+class AdminUserDetailDialogFragment : DialogFragment() {
 
-    private var _binding: FragmentPatientDetail2Binding? = null
+    private var _binding: FragmentAdminUserDetailDialogBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +20,7 @@ class PatientDetailDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPatientDetail2Binding.inflate(inflater, container, false)
+        _binding = FragmentAdminUserDetailDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -27,7 +28,13 @@ class PatientDetailDialogFragment : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val userId = arguments?.getString("userId") ?: return
-        loadPatient(userId)
+        Log.d("AdminUserDetail", "userId = $userId")
+
+        loadUser(userId)
+
+        binding.btnClose.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onStart() {
@@ -38,7 +45,7 @@ class PatientDetailDialogFragment : DialogFragment() {
         )
     }
 
-    private fun loadPatient(userId: String) {
+    private fun loadUser(userId: String) {
         FirebaseDatabase.getInstance()
             .getReference("users")
             .child(userId)
@@ -47,10 +54,10 @@ class PatientDetailDialogFragment : DialogFragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue(User::class.java) ?: return
 
-                    binding.tvNama.text = "Nama Pasien: ${user.name}"
-                    binding.tvEmail.text = "Email Pasien: ${user.email}"
+                    binding.tvName.text = "Nama Pasien: ${user.name}"
+                    binding.tvEmail.text ="Email Pasien: ${user.email}"
                     binding.tvGender.text = "Jenis Kelamin Pasien: ${user.gender}"
-                    binding.tvUsia.text = "Usia Pasien: ${user.age} tahun"
+                    binding.tvAge.text = "Usia Pasien: ${user.age} tahun"
                     binding.tvPhone.text = "Nomor HP Pasien: ${user.phone}"
                 }
 

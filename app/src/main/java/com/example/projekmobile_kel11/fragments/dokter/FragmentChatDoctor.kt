@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.adapters.ChatAdapter
 import com.example.projekmobile_kel11.data.model.ChatMessage
 import com.example.projekmobile_kel11.databinding.FragmentChatDoctorBinding
+import com.example.projekmobile_kel11.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -209,5 +210,7 @@ class FragmentChatDoctor : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (activity as? MainActivity)?.showBottomNav()
+
     }
 }

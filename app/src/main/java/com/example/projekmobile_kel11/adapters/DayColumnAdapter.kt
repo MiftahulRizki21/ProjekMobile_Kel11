@@ -40,7 +40,9 @@ class DayColumnAdapter(
                 scheduleMap[day] ?: emptyList(),
                 onDelete,
                 onApprove,
+                onEdit = { }, // jika belum dipakai
                 onReject
+
             )
         }
     }

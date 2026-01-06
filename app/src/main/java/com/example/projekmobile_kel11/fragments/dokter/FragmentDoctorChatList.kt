@@ -20,9 +20,12 @@ class FragmentDoctorChatList : Fragment() {
     private var _binding: FragmentDoctorChatListBinding? = null
     private val binding get() = _binding!!
 
-    private val list = mutableListOf<Consultation>()
     private lateinit var adapter: DoctorChatListAdapter
     private lateinit var doctorId: String
+
+    // 🔥 Data sumber
+    private val chatList = mutableListOf<Consultation>()
+    private val filteredChatList = mutableListOf<Consultation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +42,10 @@ class FragmentDoctorChatList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        adapter = DoctorChatListAdapter(list) { consultation ->
-
+        adapter = DoctorChatListAdapter(mutableListOf()) { consultation ->
             val bundle = bundleOf(
                 "consultationId" to consultation.consultationId
             )
-
             findNavController().navigate(
                 R.id.fragmentChatDoctor,
                 bundle
@@ -54,28 +55,117 @@ class FragmentDoctorChatList : Fragment() {
         binding.rvChatList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChatList.adapter = adapter
 
+        setupSearch()
         loadChats()
     }
 
-
+    // ===============================
+    // LOAD CHAT DARI FIREBASE
+    // ===============================
     private fun loadChats() {
         if (doctorId.isEmpty()) return
 
-        FirebaseDatabase.getInstance()
-            .getReference("consultations")
+        val db = FirebaseDatabase.getInstance()
+        val consultationRef = db.getReference("consultations")
+        val userRef = db.getReference("users")
+
+        consultationRef
             .orderByChild("doctorId")
             .equalTo(doctorId)
             .addValueEventListener(object : ValueEventListener {
+
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    list.clear()
-                    snapshot.children.forEach {
-                        it.getValue(Consultation::class.java)?.let(list::add)
+                    chatList.clear()
+                    val userIds = mutableSetOf<String>()
+
+                    snapshot.children.forEach { snap ->
+                        val chat = snap.getValue(Consultation::class.java) ?: return@forEach
+                        chat.consultationId = snap.key ?: ""
+                        chatList.add(chat)
+                        userIds.add(chat.userId)
                     }
-                    adapter.notifyDataSetChanged()
+
+                    if (userIds.isEmpty()) {
+                        adapter.updateData(emptyList())
+                        return
+                    }
+
+                    loadUsersForChats(userIds, chatList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {}
             })
+    }
+    private fun loadUsersForChats(
+        userIds: Set<String>,
+        chats: MutableList<Consultation>
+    ) {
+        val userRef = FirebaseDatabase.getInstance().getReference("users")
+        val userMap = mutableMapOf<String, String>()
+
+        var loaded = 0
+
+        userIds.forEach { uid ->
+            userRef.child(uid)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val name = snapshot.child("name").getValue(String::class.java)
+                            ?: "Pasien"
+
+                        userMap[uid] = name
+
+                        loaded++
+                        if (loaded == userIds.size) {
+                            // 🔥 JOIN DI SINI
+                            chats.forEach { chat ->
+                                chat.userName = userMap[chat.userId] ?: "Pasien"
+                            }
+
+                            adapter.updateData(chats.toList())
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        loaded++
+                    }
+                })
+        }
+    }
+
+
+    // ===============================
+    // SEARCH CHAT
+    // ===============================
+    private fun setupSearch() {
+        binding.searchChat.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val keyword = newText.orEmpty().trim()
+
+                filteredChatList.clear()
+
+                if (keyword.isEmpty()) {
+                    adapter.updateData(chatList.toList())
+                    return true
+                }
+
+                for (chat in chatList) {
+                    if (
+                        chat.lastMessage.contains(keyword, true) ||
+                        chat.consultationId.contains(keyword, true)
+                    ) {
+                        filteredChatList.add(chat)
+                    }
+                }
+
+                adapter.updateData(filteredChatList.toList())
+                return true
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -83,4 +173,3 @@ class FragmentDoctorChatList : Fragment() {
         _binding = null
     }
 }
-

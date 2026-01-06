@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light">
+    android:background="@color/bg_light"
+    android:paddingBottom="16dp">
 
     <!-- ================= APP BAR ================= -->
     <com.google.android.material.appbar.MaterialToolbar
@@ -33,15 +34,15 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
 
+
     <!-- ================= BOTTOM NAV ================= -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_height="wrap_content"
 
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
 
         android:background="@drawable/bg_bottom_nav"
         android:elevation="16dp"

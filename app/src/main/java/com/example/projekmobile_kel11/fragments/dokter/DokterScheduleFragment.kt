@@ -7,17 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.adapters.ScheduleDayAdapter
-import com.example.projekmobile_kel11.adapters.WeeklyScheduleAdapter
 import com.example.projekmobile_kel11.data.model.TimeSlot
 import com.example.projekmobile_kel11.databinding.FragmentDokterScheduleBinding
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DokterScheduleFragment : Fragment() {
@@ -42,6 +37,7 @@ class DokterScheduleFragment : Fragment() {
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.action_to_addSchedule)
         }
+
     }
 
     private fun loadWeeklySchedule() {
@@ -66,26 +62,50 @@ class DokterScheduleFragment : Fragment() {
 
 
     private fun setupRecycler(data: Map<String, List<TimeSlot>>) {
-        binding.rvSchedule.layoutManager = LinearLayoutManager(requireContext())
+        if (!isAdded || view == null) return
+
+        binding.rvSchedule.layoutManager =
+            LinearLayoutManager(binding.root.context)
+
         binding.rvSchedule.adapter = ScheduleDayAdapter(
             data,
             onApprove = { approveSlot(it) },
+            onReject = { rejectSlot(it) },
             onEdit = { editSlot(it) },
             onDelete = { deleteSlot(it) }
         )
     }
 
+
     private fun approveSlot(slot: TimeSlot) {
+        val doctorId = FirebaseAuth.getInstance().uid ?: return
+
         FirebaseFirestore.getInstance()
             .collection("doctor_schedules")
-            .document(slot.doctorId)
+            .document(doctorId)
             .collection("schedules")
             .document(slot.id)
-            .update("status", "booked")
+            .update(
+                mapOf(
+                    "status" to "booked"
+                )
+            )
             .addOnSuccessListener {
-                loadWeeklySchedule()
+                Toast.makeText(
+                    requireContext(),
+                    "Jadwal berhasil di-approve",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Gagal approve jadwal",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
+
 
 
 
@@ -128,10 +148,12 @@ class DokterScheduleFragment : Fragment() {
                 )
             )
     }
-    private fun rejectBooking(slot: TimeSlot) {
+    private fun rejectSlot(slot: TimeSlot) {
+        val doctorId = FirebaseAuth.getInstance().uid ?: return
+
         FirebaseFirestore.getInstance()
             .collection("doctor_schedules")
-            .document(slot.doctorId)
+            .document(doctorId)
             .collection("schedules")
             .document(slot.id)
             .update(
@@ -140,5 +162,20 @@ class DokterScheduleFragment : Fragment() {
                     "patientId" to null
                 )
             )
+            .addOnSuccessListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Booking ditolak",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Gagal menolak booking",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
+
 }

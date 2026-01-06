@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ScheduleDayAdapter(
     private val data: Map<String, List<TimeSlot>>,
     private val onApprove: (TimeSlot) -> Unit,
+    private val onReject: (TimeSlot) -> Unit,
     private val onEdit: (TimeSlot) -> Unit,
     private val onDelete: (TimeSlot) -> Unit
 ) : RecyclerView.Adapter<ScheduleDayAdapter.ViewHolder>() {
@@ -31,16 +32,24 @@ class ScheduleDayAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val date = data.keys.elementAt(position)
-        val slots = data[date] ?: emptyList()
+        val slots = data[date].orEmpty()
 
         holder.binding.tvDay.text = date
+
         holder.binding.rvSlots.layoutManager =
             LinearLayoutManager(holder.itemView.context)
 
         holder.binding.rvSlots.adapter =
-            TimeSlotAdapter(slots, onApprove, onEdit, onDelete)
+            TimeSlotAdapter(
+                slots,
+                onApprove,
+                onReject,
+                onEdit,
+                onDelete
+            )
     }
 
     override fun getItemCount() = data.size
 }
+
 

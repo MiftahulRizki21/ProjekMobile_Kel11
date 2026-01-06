@@ -4,20 +4,20 @@
     <item
         android:id="@+id/menu_dashboard"
         android:title="Dashboard"
-        android:icon="@drawable/ic_edit"/>
+        android:icon="@drawable/ic_home"/>
 
     <item
         android:id="@+id/menu_pasien"
         android:title="Pasien"
-        android:icon="@drawable/ic_edit"/>
+        android:icon="@drawable/ic_profile"/>
 
     <item
         android:id="@+id/menu_chat"
         android:title="Chat"
-        android:icon="@drawable/ic_edit"/>
+        android:icon="@drawable/ic_chat"/>
     <item
         android:id="@+id/menu_schedule"
-        android:icon="@drawable/ic_edit"
+        android:icon="@drawable/ic_calendar"
         android:title="Jadwal"/>
 
 </menu>
