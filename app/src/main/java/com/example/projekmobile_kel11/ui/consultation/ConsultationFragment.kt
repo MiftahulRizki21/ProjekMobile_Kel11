@@ -112,7 +112,7 @@ class ConsultationFragment : Fragment() {
             .commit()
 
         // pastikan bottom nav tetap terlihat
-        (activity as? MainActivity)?.showBottomNav()
+        (activity as? MainActivity)?.hideBottomNav()
     }
 
     override fun onDestroyView() {

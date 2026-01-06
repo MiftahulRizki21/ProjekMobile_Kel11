@@ -1,6 +1,7 @@
 package com.example.projekmobile_kel11.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projekmobile_kel11.data.model.TimeSlot
@@ -9,6 +10,7 @@ import com.example.projekmobile_kel11.databinding.ItemTimeSlotBinding
 class TimeSlotAdapter(
     private val slots: List<TimeSlot>,
     private val onApprove: (TimeSlot) -> Unit,
+    private val onReject: (TimeSlot) -> Unit,
     private val onEdit: (TimeSlot) -> Unit,
     private val onDelete: (TimeSlot) -> Unit
 ) : RecyclerView.Adapter<TimeSlotAdapter.ViewHolder>() {
@@ -16,15 +18,9 @@ class TimeSlotAdapter(
     inner class ViewHolder(val binding: ItemTimeSlotBinding)
         : RecyclerView.ViewHolder(binding.root)
 
-    // 🔹 WAJIB ADA
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemTimeSlotBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding)
     }
@@ -35,10 +31,25 @@ class TimeSlotAdapter(
         holder.binding.tvTime.text =
             "${slot.startTime} - ${slot.endTime}"
 
-        holder.binding.tvStatus.text = slot.status
+        holder.binding.tvStatus.text = slot.status.uppercase()
 
+        // 🔹 STATUS HANDLING
+        when (slot.status) {
+            "requested" -> {
+                holder.binding.bookingLayout.visibility = View.VISIBLE
+            }
+            else -> {
+                holder.binding.bookingLayout.visibility = View.GONE
+            }
+        }
+
+        // 🔹 ACTIONS
         holder.binding.btnApprove.setOnClickListener {
             onApprove(slot)
+        }
+
+        holder.binding.btnReject.setOnClickListener {
+            onReject(slot)
         }
 
         holder.binding.btnEdit.setOnClickListener {
@@ -50,5 +61,6 @@ class TimeSlotAdapter(
         }
     }
 
-    override fun getItemCount(): Int = slots.size
+    override fun getItemCount() = slots.size
 }
+

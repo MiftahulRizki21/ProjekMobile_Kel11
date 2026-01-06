@@ -7,7 +7,7 @@ import com.example.projekmobile_kel11.data.model.Consultation
 import com.example.projekmobile_kel11.databinding.ItemChatListBinding
 
 class DoctorChatListAdapter(
-    private val list: List<Consultation>,
+    private val list: MutableList<Consultation>,
     private val onClick: (Consultation) -> Unit
 ) : RecyclerView.Adapter<DoctorChatListAdapter.VH>() {
 
@@ -15,15 +15,29 @@ class DoctorChatListAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        return VH(ItemChatListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return VH(
+            ItemChatListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = list[position]
-        holder.binding.tvName.text = "Pasien ${item.userId}"
+        holder.binding.tvName.text = item.userName
         holder.binding.tvLastMessage.text = item.lastMessage
         holder.itemView.setOnClickListener { onClick(item) }
     }
 
-    override fun getItemCount() = list.size
+
+    override fun getItemCount(): Int = list.size
+
+    fun updateData(newList: List<Consultation>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
+    }
 }
+

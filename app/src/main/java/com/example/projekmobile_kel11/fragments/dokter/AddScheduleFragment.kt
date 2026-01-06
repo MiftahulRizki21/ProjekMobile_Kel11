@@ -1,29 +1,30 @@
 package com.example.projekmobile_kel11.fragments.dokter
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.projekmobile_kel11.R
 import com.example.projekmobile_kel11.databinding.FragmentAddScheduleBinding
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class AddScheduleFragment : Fragment() {
     private var selectedDate: String? = null
     private var startTime: String? = null
     private var endTime: String? = null
+    private var selectedDay: String? = null
 
     private lateinit var binding: FragmentAddScheduleBinding
     private val doctorId by lazy {
@@ -40,30 +41,34 @@ class AddScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        setupDaySpinner()
         setupTimePicker()
 
         binding.btnSave.setOnClickListener {
             saveSchedule()
         }
         binding.btnDate.setOnClickListener {
-            val calendar = Calendar.getInstance()
+            val datePicker = MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Pilih Tanggal")
+                .build()
 
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            datePicker.show(parentFragmentManager, "DATE_PICKER")
 
-            DatePickerDialog(
-                requireContext(),
-                { _, y, m, d ->
-                    selectedDate = "%04d-%02d-%02d".format(y, m + 1, d)
-                    binding.btnDate.text = selectedDate
-                },
-                year,
-                month,
-                day
-            ).show()
+            datePicker.addOnPositiveButtonClickListener { millis ->
+                val date = SimpleDateFormat(
+                    "yyyy-MM-dd",
+                    Locale.getDefault()
+                ).format(Date(millis))
+
+                val dayName = getDayName(date)
+
+                binding.tvDate.text = "$dayName, $date"
+
+                selectedDate = date
+                selectedDay = dayName
+            }
         }
+
+
         binding.btnSave.setOnClickListener {
 
             if (selectedDate == null || startTime == null || endTime == null) {
@@ -71,31 +76,10 @@ class AddScheduleFragment : Fragment() {
                 return@setOnClickListener
             }
 
+
             saveSchedule()
         }
 
-    }
-
-    // 🔹 ISI SPINNER
-    private fun setupDaySpinner() {
-        val days = listOf(
-            "Pilih Hari",
-            "Senin",
-            "Selasa",
-            "Rabu",
-            "Kamis",
-            "Jumat",
-            "Sabtu",
-            "Minggu"
-        )
-
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            days
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spDay.adapter = adapter
     }
 
     // 🔹 TIME PICKER
@@ -153,12 +137,14 @@ class AddScheduleFragment : Fragment() {
 
         val data = hashMapOf(
             "date" to selectedDate,
+            "day" to selectedDay,
             "startTime" to startTime,
             "endTime" to endTime,
             "status" to "available",
             "patientId" to null,
             "doctorId" to doctorId
         )
+
 
         FirebaseFirestore.getInstance()
             .collection("doctor_schedules")
@@ -169,6 +155,14 @@ class AddScheduleFragment : Fragment() {
                 Toast.makeText(requireContext(), "Jadwal berhasil disimpan", Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
+    }
+
+
+    private fun getDayName(dateString: String): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = sdf.parse(dateString) ?: return ""
+
+        return SimpleDateFormat("EEEE", Locale("id", "ID")).format(date)
     }
 
 }

@@ -7,6 +7,8 @@ data class Consultation(
     var lastMessage: String = "",
     var lastTimestamp: Long = 0L,
     var unreadCountDoctor: Int = 0,
+    var userName: String = ""   // 🔥 HASIL JOIN
+
 )
 
 

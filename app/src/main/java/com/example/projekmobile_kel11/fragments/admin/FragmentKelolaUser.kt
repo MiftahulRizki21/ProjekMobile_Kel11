@@ -57,9 +57,8 @@ class KelolaUserFragment : Fragment() {
         userAdapter = UserAdapter(
             users = mutableListOf(),
 
-            // 🔥 Admin TIDAK pakai klik item
-            onItemClick = { _ ->
-                // tidak ada aksi
+            onItemClick = { user ->
+                openUserDetail(user.userId)
             },
 
             onDeleteClick = { userId ->
@@ -103,7 +102,10 @@ class KelolaUserFragment : Fragment() {
                 for (data in snapshot.children) {
                     val user = data.getValue(User::class.java) ?: continue
 
-                    // ✅ HANYA USER (PASlEN)
+                    // 🔥 INI WAJIB
+                    user.userId = data.key ?: ""
+
+                    // HANYA USER (PASlEN)
                     if (user.role != "user") continue
 
                     if (userList.none { it.userId == user.userId }) {
@@ -112,6 +114,7 @@ class KelolaUserFragment : Fragment() {
 
                     lastKey = data.key
                 }
+
 
                 userAdapter.updateData(userList)
                 isLoading = false
@@ -159,7 +162,7 @@ class KelolaUserFragment : Fragment() {
 
                 for (user in userList) {
                     if (
-                        user.nama.contains(keyword, true) ||
+                        user.name.contains(keyword, true) ||
                         user.email.contains(keyword, true)
                     ) {
                         filteredList.add(user)
@@ -202,7 +205,7 @@ class KelolaUserFragment : Fragment() {
     private fun showDeleteConfirmation(user: User) {
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle("Hapus User")
-            .setMessage("Yakin ingin menghapus ${user.nama}?")
+            .setMessage("Yakin ingin menghapus ${user.name}?")
             .setPositiveButton("Hapus") { _, _ ->
                 hapusUser(user)
             }
@@ -210,6 +213,14 @@ class KelolaUserFragment : Fragment() {
             .show()
     }
 
+    private fun openUserDetail(userId: String) {
+        val dialog = AdminUserDetailDialogFragment().apply {
+            arguments = Bundle().apply {
+                putString("userId", userId)
+            }
+        }
+        dialog.show(parentFragmentManager, "AdminUserDetail")
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
