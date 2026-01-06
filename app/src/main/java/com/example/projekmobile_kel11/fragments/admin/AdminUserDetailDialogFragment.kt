@@ -6,14 +6,21 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import com.example.projekmobile_kel11.data.model.PredictionResult
 import com.example.projekmobile_kel11.data.model.User
 import com.example.projekmobile_kel11.databinding.FragmentAdminUserDetailDialogBinding
+import com.example.projekmobile_kel11.ui.profile.PredictionHistoryAdapter
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.Query
 
 class AdminUserDetailDialogFragment : DialogFragment() {
 
     private var _binding: FragmentAdminUserDetailDialogBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var historyAdapter: PredictionHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +35,28 @@ class AdminUserDetailDialogFragment : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val userId = arguments?.getString("userId") ?: return
-        Log.d("AdminUserDetail", "userId = $userId")
 
-        loadUser(userId)
+        // 🔥 Adapter prediksi
+        historyAdapter = PredictionHistoryAdapter(
+            onDetail = { prediction ->
+                // Admin hanya lihat detail
+                Log.d("ADMIN", "Detail prediksi: ${prediction.riskLevel}")
+            },
+            onConsult = {
+                // Admin tidak perlu konsultasi
+            }
+        )
 
+        binding.rvPredictionHistory.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = historyAdapter
+        }
         binding.btnClose.setOnClickListener {
             dismiss()
         }
+
+        loadUser(userId)
+        loadPredictionHistory(userId)
     }
 
     override fun onStart() {
@@ -45,6 +67,7 @@ class AdminUserDetailDialogFragment : DialogFragment() {
         )
     }
 
+    // ================= USER DETAIL =================
     private fun loadUser(userId: String) {
         FirebaseDatabase.getInstance()
             .getReference("users")
@@ -54,15 +77,32 @@ class AdminUserDetailDialogFragment : DialogFragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val user = snapshot.getValue(User::class.java) ?: return
 
-                    binding.tvName.text = "Nama Pasien: ${user.name}"
-                    binding.tvEmail.text ="Email Pasien: ${user.email}"
-                    binding.tvGender.text = "Jenis Kelamin Pasien: ${user.gender}"
-                    binding.tvAge.text = "Usia Pasien: ${user.age} tahun"
-                    binding.tvPhone.text = "Nomor HP Pasien: ${user.phone}"
+                    binding.tvNama.text = user.name
+                    binding.tvEmail.text = user.email
+                    binding.tvGender.text = user.gender
+                    binding.tvUsia.text = "${user.age} tahun"
+                    binding.tvPhone.text = user.phone
                 }
 
                 override fun onCancelled(error: DatabaseError) {}
             })
+    }
+
+    // ================= RIWAYAT PREDIKSI =================
+    private fun loadPredictionHistory(userId: String) {
+        FirebaseFirestore.getInstance()
+            .collection("predictions")
+            .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(5)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val list = snapshot.toObjects(PredictionResult::class.java)
+                historyAdapter.submitList(list)
+
+                binding.tvEmptyPrediction.visibility =
+                    if (list.isEmpty()) View.VISIBLE else View.GONE
+            }
     }
 
     override fun onDestroyView() {
@@ -70,3 +110,4 @@ class AdminUserDetailDialogFragment : DialogFragment() {
         _binding = null
     }
 }
+

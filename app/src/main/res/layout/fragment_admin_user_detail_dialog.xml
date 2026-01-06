@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvNama"
         android:text="Nama"
         android:textSize="16sp"
         android:layout_width="match_parent"
@@ -29,19 +28,13 @@
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/tvRole"
-        android:text="Role"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
         android:id="@+id/tvGender"
         android:text="Gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/tvAge"
+        android:id="@+id/tvUsia"
         android:text="Usia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -49,6 +42,26 @@
     <TextView
         android:id="@+id/tvPhone"
         android:text="No HP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- 🔥 RIWAYAT PREDIKSI -->
+    <TextView
+        android:text="Riwayat Prediksi"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvEmptyPrediction"
+        android:text="Belum ada riwayat prediksi"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPredictionHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

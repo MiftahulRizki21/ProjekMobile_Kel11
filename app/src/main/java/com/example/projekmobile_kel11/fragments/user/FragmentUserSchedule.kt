@@ -34,7 +34,7 @@ class UserScheduleFragment : Fragment() {
     private val doctorMap = mutableMapOf<String, Doctor>()
 
 
-    private val allSchedules = mutableListOf<TimeSlot>() // ⬅️ SIMPAN SEMUA JADWAL
+    private val allSchedules = mutableListOf<TimeSlot>()
 
     private lateinit var binding: FragmentUserScheduleBinding
     private lateinit var adapter: UserTimeSlotAdapter
@@ -167,6 +167,11 @@ class UserScheduleFragment : Fragment() {
         }
 
         dialog.show()
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
     }
 
 
