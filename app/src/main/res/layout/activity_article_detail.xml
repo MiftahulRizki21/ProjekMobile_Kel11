@@ -101,26 +101,16 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- WebView Container Card -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- WebView Container -->
+            <WebView
+                android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="2dp">
-
-
-            <WebView
-                    android:id="@+id/webView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    android:overScrollMode="never"
-                    android:nestedScrollingEnabled="false"
-                    tools:ignore="WebViewLayout"/>
-
-
-            </com.google.android.material.card.MaterialCardView>
-
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/white"
+                tools:ignore="WebViewLayout"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
