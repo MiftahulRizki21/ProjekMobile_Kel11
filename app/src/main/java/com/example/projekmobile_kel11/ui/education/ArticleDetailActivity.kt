@@ -32,50 +32,39 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun loadArticle() {
-        val article = intent.getSerializableExtra("article") as? Article ?: return
+        val article = intent.getParcelableExtra<Article>("article")
+
+        if (article == null) {
+            finish()
+            return
+        }
 
         binding.toolbar.title = article.title
         binding.tvArticleTitle.text = article.title
         binding.tvArticleCategory.text = article.category
         binding.tvReadTime.text = "${article.readTime} menit baca"
 
-        // Load HTML content
         val htmlContent = """
-            <html>
-            <head>
-                <style>
-                    body {
-                        font-family: 'Roboto', sans-serif;
-                        color: #212121;
-                        line-height: 1.6;
-                        padding: 16px;
-                    }
-                    h2 {
-                        color: #1E88E5;
-                        margin-top: 24px;
-                        margin-bottom: 12px;
-                    }
-                    h3 {
-                        color: #1565C0;
-                        margin-top: 20px;
-                        margin-bottom: 8px;
-                    }
-                    b {
-                        color: #0D47A1;
-                    }
-                    ul {
-                        padding-left: 20px;
-                    }
-                    li {
-                        margin-bottom: 4px;
-                    }
-                </style>
-            </head>
-            <body>
-                ${article.content}
-            </body>
-            </html>
-        """.trimIndent()
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style>
+                body {
+                    font-family: sans-serif;
+                    color: #212121;
+                    line-height: 1.6;
+                    padding: 0;
+                }
+                h2 { color: #1E88E5; }
+                h3 { color: #1565C0; }
+                b { color: #0D47A1; }
+            </style>
+        </head>
+        <body>
+            ${article.content}
+        </body>
+        </html>
+    """.trimIndent()
 
         binding.webView.loadDataWithBaseURL(
             null,
@@ -85,4 +74,5 @@ class ArticleDetailActivity : AppCompatActivity() {
             null
         )
     }
+
 }
